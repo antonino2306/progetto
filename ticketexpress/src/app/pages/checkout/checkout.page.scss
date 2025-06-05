@@ -1,0 +1,93 @@
+:host {
+  display: block;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+ion-content {
+  --padding-bottom: 100px;
+  --overflow: auto;
+  overflow-y: auto !important;
+}
+
+.formStyle{
+  form{
+    ion-item{
+      border-radius: 20px;
+      --background: var(--ion-button-text);
+      color: var(--ion-color-secondary);
+    }
+    ion-button{
+      margin-top: 30px;
+    }
+  }
+}
+
+.ticketHolder{
+  margin-right: 30px;
+  padding: 30px;
+  border-radius: 30px;
+  width: 70%;
+  background: var(--ion-color-secondary);
+  color: var(--secondary-text-color);
+  font-weight: bolder;
+  .checkout-title{
+    font-size: x-large;
+    margin-top: auto;
+  }
+}
+
+.upperCheckout{
+  display: flex;
+  flex-direction: row;
+  margin: 10vw;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  align-items: stretch;
+
+  app-riepilogo{
+    flex: 1;
+    min-height: 100%;
+    width: 30%;
+  }
+}
+
+app-payment-method {
+  margin-left: 9.5vw;
+  margin-right: 9.5vw;
+  margin-top: 20px;
+  margin-bottom: 100px; 
+}
+
+// Layout mobile
+.mobile-layout {
+  flex-direction: column !important;
+  margin: 30px !important; // Margine uniforme per mobile
+  
+  .ticketHolder {
+    width: 100% !important;
+    margin-right: 0 !important;
+    margin-bottom: 15px; // Ridotto lo spazio tra componenti
+  }
+}
+
+// Riepilogo per mobile
+.mobile-riepilogo {
+  margin: 30px; // Stesso margine del container principale
+}
+
+::ng-deep .mobile-riepilogo {
+  margin-left: 30px !important;
+  margin-right: 30px !important;
+}
+
+// Payment method per mobile
+.mobile-layout + app-payment-method {
+  margin: 15px 20px 20px 20px !important; // Margini uniformi e ridotti
+}
+
+
+
+
+

@@ -1,0 +1,133 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "@ionic/angular/css/normalize.css";
+@import "@ionic/angular/css/structure.css";
+@import "@ionic/angular/css/typography.css";
+@import "@ionic/angular/css/display.css";
+
+/* Optional CSS utils that can be commented out */
+@import "@ionic/angular/css/padding.css";
+@import "@ionic/angular/css/float-elements.css";
+@import "@ionic/angular/css/text-alignment.css";
+@import "@ionic/angular/css/text-transformation.css";
+@import "@ionic/angular/css/flex-utils.css";
+
+/**
+ * Ionic Dark Mode
+ * -----------------------------------------------------
+ * For more info, please see:
+ * https://ionicframework.com/docs/theming/dark-mode
+ */
+
+/* @import "@ionic/angular/css/palettes/dark.always.css"; */
+/* @import "@ionic/angular/css/palettes/dark.class.css"; */
+@import "@ionic/angular/css/palettes/dark.system.css";
+
+ion-grid {
+  --ion-grid-columns: 3;
+}
+
+ion-row {
+  padding: 0 10vw;
+  justify-content: flex-start;
+}
+
+ion-content {
+  --background: var(--background-color);
+  --color: var(--text-color);
+}
+
+.separator {
+  align-self: stretch;
+  width: 1px;
+  background-color: var(--ion-color-primary);
+  margin: 0 4px;
+}
+
+.flex {
+  display: flex;
+  flex-direction: row;
+}
+
+ion-button {
+  color: var(--ion-button-text);
+  --border-radius: 20px;
+}
+
+ion-popover {
+  --background: var(--ion-color-secondary);
+  --border-radius: 40px;
+}
+
+ion-popover::part(content) {
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+ion-toolbar {
+  --background: var(--background-color);
+}
+
+.view-toggle-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+
+  ion-button {
+    --padding-start: 8px;
+    --padding-end: 8px;
+    color: var(--icon-color);
+
+    span {
+      margin-left: 6px;
+      font-size: 0.9rem;
+    }
+  }
+}
+
+.user-page-section {
+  margin: 30px 20vw 10vh 20vw;
+}
+
+// Effetto hover per i pulsanti
+
+.navigation-button {
+  position: relative;
+  transition: all 0.3s ease;
+  --border-width: 0px;
+  --border-style: solid;
+  --border-color: var(--ion-color-primary);
+  --color-hover: var(--ion-color-primary);
+  
+  &:hover {
+    --border-width: 2px;
+    --background: transparent;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(47, 72, 143, 0.1);
+  }
+
+}
+
+@media (max-width: 768px) {
+  ion-row {
+    padding: 0; // Riduci il padding per dispositivi mobili
+  }
+
+  .user-page-section {
+    margin: 20px 0;
+  }
+}
+

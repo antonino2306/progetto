@@ -1,0 +1,22 @@
+<ion-content [fullscreen]="true">
+  <app-searchbar></app-searchbar>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-title>Categorie</ion-title>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col
+        *ngFor="let category of categories"
+        size="1.5"
+        size-md="1.5"
+        size-lg="1"
+      >
+        <app-category-card [category]="category"></app-category-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<app-cart-component></app-cart-component>

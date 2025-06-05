@@ -1,0 +1,99 @@
+<div class="calendar-container user-page-section">
+  <!-- Header del calendario -->
+  <div class="calendar-header">
+    <div class="month-navigation">
+      <ion-button fill="clear" (click)="previousMonth()">
+        <ion-icon name="chevron-back"></ion-icon>
+      </ion-button>
+
+      <h2>{{ monthNames[currentMonth] }} {{ currentYear }}</h2>
+
+      <ion-button fill="clear" (click)="nextMonth()">
+        <ion-icon name="chevron-forward"></ion-icon>
+      </ion-button>
+    </div>
+
+    <ion-button fill="outline" size="small" (click)="goToToday()">
+      Oggi
+    </ion-button>
+  </div>
+
+  <!-- Giorni della settimana -->
+  <div class="weekdays">
+    <div class="weekday" *ngFor="let day of dayNames">
+      {{ day }}
+    </div>
+  </div>
+
+  <!-- Griglia del calendario -->
+  <div class="calendar-grid">
+    <div
+      class="calendar-day"
+      *ngFor="let day of calendarDays"
+      [class.other-month]="!day.isCurrentMonth"
+      [class.today]="day.isToday"
+      [class.selected]="
+        selectedDate && selectedDate.getTime() === day.date.getTime()
+      "
+      [class.has-events]="day.hasEvents"
+      (click)="onDayClick(day)"
+    >
+      <span class="day-number">{{ day.day }}</span>
+      <div class="event-indicators" *ngIf="day.hasEvents">
+        <span
+          class="event-dot"
+          *ngFor="let event of day.events.slice(0, 3)"
+        ></span>
+        <span class="more-events" *ngIf="day.events.length > 3">
+          +{{ day.events.length - 3 }}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sezione eventi del giorno selezionato -->
+  <div class="events-section" *ngIf="selectedDate">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>
+          Eventi per {{ getFormattedSelectedDate() }}
+        </ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <div *ngIf="selectedDateEvents.length === 0" class="no-events">
+          <ion-icon name="calendar-outline"></ion-icon>
+          <p>Nessun evento programmato per questo giorno</p>
+        </div>
+
+        <div class="event-list" *ngIf="selectedDateEvents.length > 0">
+          <ion-item
+            (click)="toggleTicketVisibility()"
+            *ngFor="let event of selectedDateEvents"
+            class="event-item"
+            button
+          >
+            <div
+              class="event-color-bar"
+            ></div>
+            <ion-label *ngIf="!isTicketVisible">
+              <h3>{{ event.title }}</h3>
+            </ion-label>
+            <app-ticket *ngIf="isTicketVisible"
+              [eventName]="event.title"
+              [ticketID]="event.ticketID"
+              [artist]="event.name"
+              [location]="event.locationName"
+              [date]="event.startDate"
+              [dateNC]="event.endDateNC"
+              [holderName]="event.holderName"
+              [holderSurname]="event.holderSurname"
+              [statusTicketDB]="event.status"              
+            >
+            </app-ticket>
+          </ion-item>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</div>

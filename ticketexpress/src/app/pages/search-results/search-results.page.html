@@ -1,0 +1,17 @@
+<app-header [showBackButton]="true"></app-header>
+
+<ion-content [fullscreen]="true">
+  <ion-grid style="min-height: 100vh;">
+    <ion-row>
+    </ion-row>
+    <ion-row>
+      <ion-col size="3">
+        <app-card [isExpanded]="!isMobile" *ngFor="let event of events" 
+        [title]="event.title"
+        [imageUrl]="event.coverImage"
+        [routerLink]="['/event', event.eventID]" [state] = '{event: event}'></app-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <app-footer></app-footer>
+</ion-content>

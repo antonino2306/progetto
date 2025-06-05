@@ -1,0 +1,34 @@
+<div class="summary-container">
+  <div class="summary-title">Riepilogo</div>
+  <div class="summary-items">
+    <ng-container *ngIf="cart.length > 0; else noItems">
+      <div class="summary-item" *ngFor="let item of cart">
+        <span style="margin-right: 2em">
+          <b
+            (click)="isCheckout ? showFormTicket(cart.indexOf(item)) : null"
+            [ngClass]="{ clickable: isCheckout }"
+          >
+            {{ item.quantity }} x {{ item.title }}
+          </b>
+        </span>
+        <span
+          ><b>{{ item.price * item.quantity | currency : "EUR" }}</b></span
+        >
+      </div>
+    </ng-container>
+    <ng-template #noItems>
+      <div class="empty-summary-item">
+        <span>Nessun elemento nel carrello</span>
+      </div>
+    </ng-template>
+  </div>
+  <div class="total-line">
+    <span class="total-label"><b>Totale</b></span>
+    <span class="total-amount"
+      ><b>{{ getTotalAmount() | currency : "EUR" }}</b></span
+    >
+  </div>
+  <ion-button [disabled]="isDisabled" (click)="this.isButtonClicked.emit(true)">
+    {{ isCheckout ? "Paga" : "Procedi con l'acquisto" }}
+  </ion-button>
+</div>

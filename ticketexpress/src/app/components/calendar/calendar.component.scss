@@ -1,0 +1,262 @@
+.calendar-container {
+    padding: 20px;
+    background: var(--background-color);
+}
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  background: var(--card-background);
+  border: 1px solid var(--card-border);
+  border-radius: 8px 8px 0 0;
+
+  .month-navigation {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    h2 {
+      margin: 0;
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--text-color);
+      min-width: 200px;
+      text-align: center;
+    }
+
+    ion-button {
+      --color: var(--icon-color);
+
+      &:hover {
+        --color: var(--ion-color-primary);
+      }
+    }
+  }
+}
+
+.weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  background: var(--ion-color-primary);
+  border: 1px solid var(--card-border);
+  border-top: none;
+
+  .weekday {
+    padding: 12px 8px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--ion-button-text);
+  }
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1px;
+  background: var(--card-border);
+  padding: 1px;
+  border: 1px solid var(--card-border);
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+
+  .calendar-day {
+    background: var(--card-background);
+    min-height: 80px;
+    padding: 8px;
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.2s ease;
+    color: var(--text-color);
+
+    &:hover {
+      background: var(--ion-color-primary);
+      color: var(--ion-button-text);
+    }
+
+    &.other-month {
+      color: var(--secondary-text-color);
+      background: var(--background-color);
+
+      .day-number {
+        opacity: 0.5;
+      }
+    }
+
+    &.today {
+      background: var(--ion-color-secondary);
+      color: var(--ion-button-text);
+
+      .day-number {
+        background: var(--ion-color-primary);
+        color: var(--ion-button-text);
+        border-radius: 50%;
+        width: 28px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+      }
+    }
+
+    &.selected {
+      background: var(--ion-color-text);
+      border: 2px solid var(--ion-color-primary);
+      color: var(--ion-button-text);
+    }
+
+    &.has-events {
+      .day-number {
+        font-weight: 600;
+        color: var(--ion-color-primary);
+      }
+    }
+
+    .day-number {
+      font-size: 0.9rem;
+      margin-bottom: 4px;
+    }
+
+    .event-indicators {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2px;
+      margin-top: auto;
+
+      .event-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--ion-color-primary);
+      }
+
+      .more-events {
+        font-size: 0.7rem;
+        color: var(--secondary-text-color);
+        margin-left: 2px;
+      }
+    }
+  }
+}
+
+.events-section {
+  padding: 16px;
+  background: var(--background-color);
+
+  ion-card {
+    margin: 0;
+    background: var(--card-background);
+    border: 1px solid var(--card-border);
+
+    ion-card-title {
+      font-size: 1.1rem;
+      color: var(--ion-color-primary);
+    }
+  }
+
+  .no-events {
+    text-align: center;
+    padding: 32px 16px;
+    color: var(--secondary-text-color);
+
+    ion-icon {
+      font-size: 3rem;
+      margin-bottom: 16px;
+      color: var(--icon-color);
+    }
+
+    p {
+      margin: 0;
+      font-style: italic;
+    }
+  }
+
+  .event-list {
+    .event-item {
+      --padding-start: 0;
+      --inner-padding-end: 0;
+      margin-bottom: 8px;
+      border-radius: 8px;
+      overflow: hidden;
+      --background: var(--card-background);
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      .event-color-bar {
+        width: 4px;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        background: var(--ion-color-primary);
+      }
+
+      ion-label {
+        margin-left: 16px;
+
+        h3 {
+          font-size: 1rem;
+          font-weight: 600;
+          color: var(--text-color);
+          margin-bottom: 4px;
+        }
+
+        p {
+          font-size: 0.9rem;
+          color: var(--secondary-text-color);
+          margin: 2px 0;
+
+          &.event-time {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            font-weight: 500;
+            color: var(--ion-color-primary);
+
+            ion-icon {
+              font-size: 0.9rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+
+  .calendar-container {
+    padding: 10px;
+  }
+
+  .calendar-grid .calendar-day {
+    min-height: 60px;
+    padding: 6px;
+
+    .day-number {
+      font-size: 0.8rem;
+    }
+
+    .event-indicators .event-dot {
+      width: 4px;
+      height: 4px;
+    }
+  }
+
+  .calendar-header {
+    padding: 12px;
+
+    .month-navigation h2 {
+      font-size: 1.1rem;
+      min-width: 150px;
+    }
+  }
+}

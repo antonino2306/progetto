@@ -1,0 +1,29 @@
+ion-title {
+  font-size: 1.5rem;
+  font-weight: 900;
+  margin-top: 20px;
+  color: var(--text-color);
+}
+
+ion-item {
+  --background: var(--background-color);
+}
+
+.user-page-section {
+  display: flex;
+  flex-direction: row;
+  gap: 2vw;
+}
+
+.your-tickets {
+  flex: 1;
+}
+
+.review-section {
+  flex: 1;
+}
+
+.mobile-section {
+  width: 100vw;
+  padding: 1rem;
+}

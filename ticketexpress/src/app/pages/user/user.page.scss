@@ -1,0 +1,161 @@
+ion-header {
+  background-color: var(--background-color);
+
+}
+
+ion-toolbar {
+  --background: var(--background-color);
+  --color: var(--text-color);
+  --padding-end: 20px;
+  --padding-top: 10px;
+  --padding-bottom: 10px;
+
+  ion-button {
+    --color: var(--icon-color)
+  }
+
+}
+
+ion-title{
+  font-weight: bold;
+  font-size: 2em;
+}
+
+ion-card {
+  margin: 20px 150px;
+  border-radius: 20px;
+  display: block;
+}
+
+@media screen and (max-width: 768px) {
+  ion-card {
+    margin: 20px;
+  }
+  
+}
+
+.user-info {
+  --background: var(--ion-color-secondary);
+}
+
+.headerCard {
+  width: 100%; 
+  margin-bottom: 10px;
+}
+
+ion-card-header {
+  display: flex;
+  flex-direction: column;
+}
+
+ion-card-title {
+  font-weight: 900;
+  font-size: 2em;
+  --color: var(--ion-button-text);
+}
+
+ion-card-subtitle {
+  font-size: 1.1em;
+  margin-top: 10px;
+  margin-left: 10px;
+  color: var(--secondary-text-color);
+}
+
+ion-card-content {
+  margin-bottom: 0;
+}
+
+.OrderBy {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 10px 0 0 0;
+}
+
+.OrderBy p {
+  margin: 0 0 0 18px;
+  font-weight: 500;
+}
+
+ion-button{
+  float: right;
+  --ion-color-contrast: var(--ion-button-text) !important;
+}
+
+ion-list {
+  background-color: var(--ion-color-secondary);
+  color: var(--ion-button-text);
+}
+
+ion-item {
+  --background: var(--ion-color-secondary);
+  --color: var(--ion-button-text);
+}
+
+ion-item {
+
+  ion-icon {
+    color: var(--ion-button-text);
+  }
+}
+
+.confPass{
+  margin-top:30px;
+}
+
+.empty-message{
+  float:left;
+}
+
+.cardNoWrap{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; 
+  justify-content: space-between; 
+  
+  ion-card {
+    flex: 0 0 calc(48% - 10px);
+    max-width: calc(48% - 10px);
+    margin: 0 0 16px 0;
+  }
+}
+
+.errorMess{
+  color: red;
+  margin-top: 20px;
+  margin-left: 20px;
+  font-weight: bold;
+  font-size: 1em;
+}
+
+.apprMess{
+  margin-top: 20px;
+  margin-left: 20px;
+  font-weight: bold;
+  font-size: 1em;
+}
+
+.modifyBox{
+  flex: 1;
+  border-radius: 20px;
+}
+
+.ModifyEmPass{
+  display: flex;
+  gap: 10vw;
+  flex-wrap: nowrap;
+  padding: 0 20px;
+}
+
+@media screen and (max-width: 768px) {
+
+  .ModifyEmPass {
+    flex-direction: column;
+    padding: 0;
+  }
+
+  ion-toolbar {
+    --padding-end: 0;
+  }
+  
+}

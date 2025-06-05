@@ -1,0 +1,54 @@
+<app-header></app-header>
+<ion-content [fullscreen]="true">
+  <div class="cart-container">
+    <div class="tickets-container">
+      <div class="tickets-title-row">
+        <h2 class="tickets-title">Biglietti nel carrello</h2>
+        <span class="cart-timer">{{ timerDisplay }}</span>
+      </div>
+      <div class="tickets-title-underline"></div>
+      <div class="ticket-item" *ngFor="let item of cart">
+        <div class="ticket-details">
+          <h2>{{ item.title }}</h2>
+          <div class="ticket-row">
+            <p>
+              Posto Unico, {{ item.location_name }}, {{ item.address }}, {{
+              item.city }}.
+            </p>
+            <div class="quantity-controls">
+              <ion-button
+                fill="clear"
+                size="small"
+                (click)="decreaseQuantity(item)"
+              >
+                <ion-icon name="remove-outline" slot="icon-only"></ion-icon>
+              </ion-button>
+              <span class="quantity">{{ item.quantity }}</span>
+              <ion-button
+                fill="clear"
+                size="small"
+                (click)="increaseQuantity(item)"
+              >
+                <ion-icon name="add-outline" slot="icon-only"></ion-icon>
+              </ion-button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="cart.length === 0" class="empty-cart-message">
+        <ion-icon
+          name="cart-outline"
+          class="empty-cart-icon"
+        ></ion-icon>
+        <p>Carrello vuoto</p>
+      </div>
+    </div>
+
+    <div class="summary-container">
+      <app-riepilogo
+        [isDisabled]="( this.cart.length <= 0 )? true : false"
+        (isButtonClicked)="checkout()"
+      ></app-riepilogo>
+    </div>
+  </div>
+</ion-content>

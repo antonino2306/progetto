@@ -1,0 +1,70 @@
+<app-header
+  [showBackButton]="true"
+  [title]="event ? event.title : 'TicketExpress'"
+></app-header>
+
+<ion-content [fullscreen]="true">
+  <app-panel [images]="event ? [event.backgroundImage] : ['']"></app-panel>
+  <div class="main-container">
+    <div class="left">
+  <div class="artist-section">
+    <!-- Header della sezione artista -->
+    <div class="artist-header">
+      <div
+        *ngIf="artists.length > 0"
+        class="artist-photo"
+        [style.background-image]="'url(' + artists[0].image + ')'"
+      >
+        <div class="photo-overlay"></div>
+      </div>
+      
+      <div class="artist-basic-info" *ngIf="artists.length > 0">
+        <h2 class="artist-name">{{artists[0].name || ''}}</h2>
+        <div class="artist-badges">
+          <ion-chip class="genre-chip" color="primary">
+            <ion-icon name="musical-notes-outline"></ion-icon>
+            <ion-label>{{artists[0].genre || ''}}</ion-label>
+          </ion-chip>
+          <ion-chip class="type-chip" color="secondary">
+            <ion-icon name="mic-outline"></ion-icon>
+            <ion-label>{{artists[0].type || ''}}</ion-label>
+          </ion-chip>
+        </div>
+        
+        <div class="popularity-section">
+          <span class="popularity-label">Popolarità</span>
+          <span class="popularity-value">{{artists[0].popularity || 0}}/100</span>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Card con descrizione dell'evento -->
+    <ion-card class="event-description-card">
+      <ion-card-header>
+        <div class="description-header">
+          <ion-icon name="information-circle-outline" class="info-icon"></ion-icon>
+          <ion-card-title>Descrizione dell'evento</ion-card-title>
+        </div>
+      </ion-card-header>
+      <ion-card-content class="description-content">
+        {{event?.description || 'Nessuna descrizione disponibile per questo evento.'}}
+      </ion-card-content>
+    </ion-card>
+  </div>
+</div>
+    <ion-grid>
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="3" *ngFor="let show of shows">
+          <app-show-card
+            *ngIf="event"
+            [show]="show"
+            [eventTitle]="event.title"
+            [eventID]="event.eventID"
+            [artists]="artists"
+          ></app-show-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+  <app-footer></app-footer>
+</ion-content>

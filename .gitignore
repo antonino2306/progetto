@@ -1,0 +1,110 @@
+# -------------------------------
+# ticketexpress (Angular CLI)
+# -------------------------------
+
+ticketexpress/*~
+ticketexpress/.tmp
+ticketexpress/*.tmp.*
+ticketexpress/*.tmp.
+ticketexpress/*.log
+ticketexpress/UserInferfaceState.xcuserstate
+ticketexpress/$RECICLE.BIN/
+ticketexpress/log.txt
+
+ticketexpress/.sourcemaps
+ticketexpress/.versions
+ticketexpress/coverage
+
+# Ionic
+ticketexpress/.ionic
+ticketexpress/www
+ticketexpress/platforms/
+ticketexpress/plugins/
+
+# Compiled output
+ticketexpress/dist/
+ticketexpress/tmp/
+ticketexpress/out-tsc/
+ticketexpress/bazel-out/
+
+# Node modules
+ticketexpress/node_modules/
+ticketexpress/npm-debug.log
+ticketexpress/yarn-error.log
+# Logs
+ticketexpress/npm-debug.log
+ticketexpress/yarn-error.log
+
+# IDEs and editors
+ticketexpress/.idea/
+ticketexpress/.project
+ticketexpress/.classpath
+ticketexpress/.c9/
+ticketexpress/*.launch
+ticketexpress/.settings/
+ticketexpress/*.sublime-workspace
+
+# Visual Studio Code (ticketexpress)
+ticketexpress/.vscode/*
+!ticketexpress/.vscode/settings.json
+!ticketexpress/.vscode/tasks.json
+!ticketexpress/.vscode/launch.json
+!ticketexpress/.vscode/extensions.json
+ticketexpress/.history/*
+
+# Miscellaneous
+ticketexpress/.angular/
+ticketexpress/.angular/cache/
+ticketexpress/.sass-cache/
+ticketexpress/.nx/
+ticketexpress/.nx/cache/
+ticketexpress/connect.lock
+ticketexpress/coverage/
+ticketexpress/libpeerconnection.log
+ticketexpress/testem.log
+ticketexpress/typings/
+
+# System files
+ticketexpress/.DS_Store
+ticketexpress/Thumbs.db
+
+# Environment files (non tracciati)
+ticketexpress/src/environments/*.ts
+
+# -------------------------------
+# Backend (Express)
+# -------------------------------
+
+# Node modules
+backend/node_modules/
+# Session files
+backend/sessions/
+
+
+# Logs
+backend/npm-debug.log
+backend/yarn-error.log
+backend/*.log
+
+# Build output
+backend/dist/
+backend/build/
+
+# Environment files (es. dotenv)
+
+# Miscellaneous backend
+backend/coverage/
+backend/.DS_Store
+backend/Thumbs.db
+
+# -------------------------------
+# Common / Root
+# -------------------------------
+
+# Editor folders at root (se presenti)
+.vscode/
+.idea/
+
+# System files at root
+.DS_Store
+Thumbs.db

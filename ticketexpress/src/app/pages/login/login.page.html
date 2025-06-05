@@ -1,0 +1,55 @@
+<ion-content class="ion-padding">
+  <div class="centered-container">
+    <div class="login-container">
+      <h1 class="name-page">Login</h1>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  
+        <p class="form-label">
+          Email
+          <span
+            style="color:red"
+            *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid && loginForm.get('email')?.errors?.['email']"
+            class="error-message">
+            - Inserisci un indirizzo email valido
+          </span>
+          <span
+            style="color:red"
+            *ngIf="loginFailed && errorMessage && loginForm.get('email')?.valid"
+            class="error-message">
+            - {{ errorMessage }}
+          </span>
+        </p>
+        <ion-item [class.login-error]="loginFailed || (loginForm.get('email')?.touched && loginForm.get('email')?.invalid)">
+          <ion-input formControlName="email" required></ion-input>
+        </ion-item>
+  
+        <p class="form-label">
+          Password
+          <span style="color:red" *ngIf="loginFailed && errorMessage" class="error-message"> - {{ errorMessage }}</span>
+        </p>
+        <ion-item [class.login-error]="loginFailed">
+          <ion-input 
+            [type]="showPassword ? 'text' : 'password'"
+            formControlName="password"
+            required>
+            <ion-input-password-toggle slot="end"></ion-input-password-toggle>
+          </ion-input>
+        </ion-item>
+       
+        <div class="checkbox-remember-me">
+          <ion-checkbox slot="start" formControlName="rememberMe"></ion-checkbox>
+          <ion-label class="checkbox-label">Mantieni l'accesso</ion-label>
+        </div>
+  
+        <div class="link-container">
+          <a style="color: red" *ngIf="loginFailed && errorMessage" class="password-link" (click)="goToPasswordRecovery()">Hai dimenticato la password?</a>
+          <div class="register-row">
+            <a class="register-link" (click)="goToRegister()">Non sei ancora registrato? Registrati</a>
+            <ion-button type="submit" [disabled]="loginForm.invalid">Accedi</ion-button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</ion-content>
+

@@ -1,0 +1,10 @@
+<ion-card (click)="redirect()" class="category-card">
+  <div
+    class="image-container"
+    [style.background-image]="'url(' + category.imageUrl + ')'"
+  ></div>
+
+  <ion-card-header>
+    <ion-card-title>{{ category.name }}</ion-card-title>
+  </ion-card-header>
+</ion-card>

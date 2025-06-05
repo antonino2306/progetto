@@ -1,0 +1,39 @@
+<div *ngIf="!isMobile">
+  <div class="user-page-section">
+    <div class="your-tickets">
+      <ion-title><b>I tuoi biglietti:</b></ion-title>
+      <ion-item>
+        <ion-input
+          label="Cerca biglietto:"
+          [(ngModel)]="inputTicket"
+          (ionInput)="filteringTickets($event)"
+          #ionInputEl
+        >
+        </ion-input>
+      </ion-item>
+      <div *ngFor="let notExpTicket of ticketNotExpired">
+        <app-ticket
+          [eventName]="notExpTicket.title"
+          [artist]="notExpTicket.name"
+          [date]="notExpTicket.startDate"
+          [location]="notExpTicket.locationName"
+          [ticketID]="notExpTicket.ticketID"
+          [dateNC]="notExpTicket.endDateNC"
+          [statusTicketDB]="notExpTicket.status"
+          [holderName]="notExpTicket.holderName"
+          [holderSurname]="notExpTicket.holderSurname"
+        ></app-ticket>
+      </div>
+    </div>
+
+    <div class="review-section">
+      <app-show-review></app-show-review>
+    </div>
+
+  </div>
+
+</div>
+
+<div *ngIf="isMobile" class="mobile-section">
+  <app-show-review></app-show-review>
+</div>

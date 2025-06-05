@@ -1,0 +1,212 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Il tuo profilo</ion-title>
+    <ion-buttons slot="end">
+      <ion-button *ngIf="isMobile" id="user-options-button">
+        <ion-icon name="ellipsis-vertical-outline"></ion-icon>
+      </ion-button>
+      <ion-button [fill]="isMobile ? 'clear' : 'outline'" (click)="logout()">
+        <span *ngIf="!isMobile">Logout</span>
+        <ion-icon *ngIf="isMobile" slot="icon-only" name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-popover trigger="user-options-button" [dismissOnSelect]="true">
+    <ng-template>
+      <ion-content>
+        <ion-list>
+          <ion-item button detail="false" [routerLink]="['/faq']">
+            <ion-icon name="help-circle-outline" slot="start"></ion-icon>
+            <ion-label>FAQ</ion-label>
+          </ion-item>
+          
+          <ion-item button detail="false" [routerLink]="['/privacy']">
+            <ion-icon name="shield-checkmark-outline" slot="start"></ion-icon>
+            <ion-label>Privacy policy</ion-label>
+          </ion-item>
+          
+          <ion-item button detail="false" lines="none" [routerLink]="['/termini']">
+            <ion-icon name="document-text-outline" slot="start"></ion-icon>
+            <ion-label>Termini e condizioni</ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ng-template>
+  </ion-popover>
+</ion-header>
+
+<ion-content>
+  <!--Card che contiene le info dell'utente-->
+  <ion-card class="user-info">
+    <ion-card-header>
+      <ion-card-title
+        >{{firstName}} {{lastName}}<!-- Mettere nome e cognome dal service--></ion-card-title
+      >
+
+      <ion-card-subtitle><b>ID utente:</b> {{userID}}</ion-card-subtitle>
+      <ion-card-subtitle>
+        <div *ngIf="existPaymentMeth; then existPM else notExistPM"></div>
+        <ng-template #existPM
+          ><b>Metodo di pagamento predefinito: </b>Numero carta:
+          {{defCardNumber}} // Data di scadenza: {{defExpiredDate}} //
+          Proprietario: {{defHolderName}}</ng-template
+        >
+        <ng-template #notExistPM
+          ><b>Metodo di pagamento predefinito: </b> Nessun metodo di pagamento
+          inserito</ng-template
+        >
+      </ion-card-subtitle>
+      <ion-card-subtitle>
+        <ion-button color="danger" (click)="delProfile()"
+          >Elimina profilo</ion-button
+        >
+        <ion-button
+          color="primary"
+          [disabled]="modifyPage"
+          (click)="modifyProfile()"
+          >Modifica profilo</ion-button
+        >
+      </ion-card-subtitle>
+    </ion-card-header>
+  </ion-card>
+  <div *ngIf="modifyPage; then modifyUser else notModifyUser"></div>
+
+  <!--Modifica pagina-->
+  <ng-template #modifyUser>
+    <ion-card class="user-info">
+      <ion-card-header>
+        <ion-card-title
+          >Modifica dati profilo:
+          <ion-button color="danger" (click)="modifyProfile()"
+            >Termina modifiche</ion-button
+          >
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <!--  Modifica password, modifica nome e cognome, modifica mail e inserimento/modifica dati pagamento  -->
+        <div class="ModifyEmPass">
+          <!--modifica email-->
+          <div class="modifyBox">
+            <ion-list>
+              <ion-item>
+                <p><b>Email corrente:</b> {{email}}</p>
+              </ion-item>
+              <ion-item>
+                <ion-input
+                  label-placement="start"
+                  placeholder="Nuova email"
+                  [(ngModel)]="newMail"
+                >
+                </ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-input
+                  label-placement="start"
+                  placeholder="Ripetere la nuova email"
+                  [(ngModel)]="newMailConf"
+                >
+                </ion-input>
+              </ion-item>
+              <div *ngIf="errorMail; then error"></div>
+              <ng-template #error>
+                <p class="errorMess">Errore nella modifica della email</p>
+              </ng-template>
+              <div *ngIf="apprMail; then approved"></div>
+              <ng-template #approved>
+                <p class="apprMess">Email modificata correttamente</p>
+              </ng-template>
+              <ion-button
+                class="confPass"
+                color="primary"
+                (click)="modifyEmail()"
+                >Conferma modifica email</ion-button
+              >
+            </ion-list>
+          </div>
+
+          <!--Modifica password-->
+          <div class="modifyBox">
+            <ion-list>
+              <ion-item>
+                <ion-input
+                  label-placement="start"
+                  placeholder="Password corrente"
+                  [(ngModel)]="pass"
+                >
+                </ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-input
+                  label-placement="start"
+                  placeholder="Nuova password"
+                  [(ngModel)]="newPass"
+                >
+                </ion-input>
+              </ion-item>
+              <ion-item>
+                <ion-input
+                  label-placement="start"
+                  placeholder="Ripetere la nuova password"
+                  [(ngModel)]="newPassConf"
+                >
+                </ion-input>
+              </ion-item>
+              <div *ngIf="errorPass; then error"></div>
+              <ng-template #error>
+                <p class="errorMess">Errore nella modifica della password</p>
+              </ng-template>
+              <div *ngIf="apprPass; then approved"></div>
+              <ng-template #approved>
+                <p class="apprMess">Password modificata correttamente</p>
+              </ng-template>
+              <ion-button
+                class="confPass"
+                color="primary"
+                (click)="modifyPassword()"
+                >Conferma modifica password</ion-button
+              >
+            </ion-list>
+          </div>
+        </div>
+
+        <!--Modifica e aggiunta metodo di pagamento-->
+        <ion-card-title style="margin-top: 20px">
+          Metodi di pagamento:
+        </ion-card-title>
+        <!-- Si mette inizialmente una card per mostrare quello predefinito e per modificare quello predefinito scegliendone un
+        altro  tra quelli presenti-->
+        <!-- Sotto si mette un menù a scomparsa dove vengono fatti vedere tutti i metodi di pagamento impostati e la possibilità
+        di aggiungerne uno-->
+        <!-- Ovviamente si possono eliminare tutti i metodi di pagamento (tranne quello predefinito)-->
+        <app-payment-method></app-payment-method>
+      </ion-card-content>
+    </ion-card>
+  </ng-template>
+
+  <ng-template #notModifyUser>
+    <!-- sezione che contiene i biglietti dell'utente e gli artisti preferiti, affiancate -->
+    <ion-segment value="Event">
+      <ion-segment-button value="Event" (click)="visualizeEvent()">
+        <ion-label>Preferiti</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="Ticket" (click)="visualizeTicket()">
+        <ion-label>
+          {{isMobile ? "Eventi a cui hai partecipato" : " Biglietti"}}
+        </ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="Order" (click)="visualizeOrder()">
+        <ion-label>Storico ordini</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="Date" *ngIf="!isMobile" (click)="visualizeDate()">
+        <ion-label>Calendario eventi</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+
+
+    <app-event *ngIf="visEvent"></app-event>
+    <app-all-ticket *ngIf="visTicket"></app-all-ticket>
+    <app-order *ngIf="visOrder"></app-order>
+    <app-calendar *ngIf="visCalendar && !isMobile"></app-calendar>
+  </ng-template>
+</ion-content>

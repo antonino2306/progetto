@@ -1,0 +1,177 @@
+.searchbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 0px 16px;
+  background-color: var(--ion-button-text);
+  border-radius: 50px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  margin: 0 auto;
+}
+
+.home-page-searchbar {
+  width: 70vw;
+}
+
+input[type="text"] {
+  flex: 1;
+  border: none;
+  padding: 10px 14px;
+  font-size: 16px;
+  background-color: var(--ion-button-text);
+  color: #7f8692;
+  transition: all 0.2s ease;
+  outline: none;
+
+  &::placeholder {
+    color: #a0aec0;
+  }
+
+  &:focus {
+    border-color: var(--ion-color-secondary);
+    border-radius: 50px;
+    box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.15);
+  }
+}
+
+.price-btn {
+  --border-radius: 10px;
+  text-transform: capitalize;
+  font-size: 0.9em;
+  height: auto;
+}
+
+ion-button {
+  --background: var(--ion-color-primary);
+  --background-hover: #2c5282;
+  --box-shadow: 0 2px 6px rgba(49, 130, 206, 0.3);
+  --padding-start: 12px;
+  --padding-end: 12px;
+  height: 42px;
+
+  &:hover {
+    --box-shadow: 0 4px 8px rgba(49, 130, 206, 0.4);
+  }
+
+  ion-icon {
+    font-size: 20px;
+    color: var(--ion-button-text);
+  }
+}
+
+ion-button::part(native) {
+  color: var(--ion-button-text);
+}
+
+ion-select {
+  --placeholder-color: var(--ion-color-primary);
+  --placeholder-opacity: 1;
+  color: var(--ion-color-primary);
+  --highlight-color-valid: var(--ion-color-primary);
+}
+
+// Serve a sovrascrivere lo stile di default del pulsante
+ion-datetime-button::part(native) {
+  background-color: var(
+    --ion-color-primary
+  ); /* Il colore di sfondo che desideri */
+  color: var(--ion-button-text);
+}
+
+ion-datetime {
+  --background: var(--ion-color-secondary);
+  --background-rgb: 245, 235, 247;
+  --wheel-highlight-background: rgb(167, 165, 195);
+  --wheel-highlight-border-radius: 48px;
+  --wheel-fade-background-rgb: 16, 30, 69;
+  border-radius: 20px;
+}
+
+ion-datetime::part(wheel-item) {
+  color: var(--ion-button-text);
+}
+
+ion-datetime::part(wheel-item active) {
+  color: var(--ion-color-primary);
+}
+
+ion-datetime::part(calendar-day) {
+  color: var(--ion-button-text);
+}
+
+// Colore del mese e dell'anno nell'intestazione
+ion-datetime::part(month-year-button) {
+  color: var(--ion-button-text); // Sostituisci con il colore desiderato
+}
+
+ion-buttons > ion-button {
+  color: var(--ion-button-text);
+  --box-shadow: none;
+  --border-radius: 20px !important;
+}
+
+.price-range {
+  padding: 30px 16px 0px 16px;
+
+  ion-range {
+    --bar-height: 3px;
+    --bar-border-radius: 3px;
+    --knob-size: 20px;
+    --pin-color: var(--ion-button-text);
+    margin-bottom: 15px;
+    padding-top: 0;
+    color: var(--ion-button-text);
+  }
+}
+
+.applyPriceFilter {
+  --background: transparent;
+  --box-shadow: none;
+
+  &:hover {
+    --box-shadow: none;
+  }
+}
+
+// Adatta a schermi più piccoli
+@media (max-width: 950px) {
+  .home-page-searchbar {
+    width: 90vw;
+  }
+
+  .header-searchbar {
+    display: none;
+  }
+  .price-dropdown {
+    width: 50wv;
+  }
+}
+
+.mobile-search {
+  background-color: var(--ion-button-text);
+  display: flex;
+  justify-content: space-between;
+  margin: 16px;
+  border-radius: 50px;
+}
+
+.mobile-search > input {
+  border-radius: 50px;
+
+  &:focus {
+    border: none;
+    box-shadow: none;
+  }
+}
+
+.searchbar.mobile {
+  background-color: transparent;
+  flex-direction: column;
+}
+
+.filter-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}

@@ -1,0 +1,160 @@
+<app-header [showSearchbar]="false"></app-header>
+<ion-content [fullscreen]="true">
+  <app-panel [isStatic]="false" [images]="images" [events]="this.popularEvents"></app-panel>
+  <app-searchbar [isInHomePage]="true" *ngIf="!isMobile"></app-searchbar>
+
+  <ion-grid>
+    <ion-row class="ion-justify-content-center ion-margin-top">
+      <ion-col
+        sizeLg="0.5"
+        [sizeMd]="isMobile ? 1: 1.5"
+        *ngFor="let category of categories"
+        class="ion-text-center"
+      >
+        <ion-button
+        class="category-button"
+          expand="block"
+          size="medium"
+          [routerLink]="['/category', category.name]"
+          >{{category.name}}</ion-button
+        >
+      </ion-col>
+    </ion-row>
+
+    <!-- Riga per eventi popolari -->
+    <ion-row>
+      <ion-col size="3">
+        <div class="category-heading" style="padding: 0">
+          <div
+            class="category-title-container"
+            (click)="togglePopularExpansion()"
+          >
+            <h2>Eventi Popolari</h2>
+            <ion-icon
+              *ngIf="!isMobile"
+              [name]="expandedPopular ? 'chevron-down-outline': 'chevron-forward-outline'"
+            ></ion-icon>
+          </div>
+          
+          <ion-button class="see-more navigation-button" fill="clear" [routerLink]="['/popular-events']">
+            Vedi tutti
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+          </ion-button>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col
+        *ngFor="let event of popularEvents"
+        [sizeLg]="expandedPopular ? '3': '1'"
+        sizeMd="3"
+      >
+        <app-card
+          [routerLink]="['/event', event.eventID]"
+          [state]="{ event: event }"
+          [title]="event.title"
+          [imageUrl]="event.coverImage"
+          [isExpanded]="expandedPopular"
+        ></app-card>
+      </ion-col>
+    </ion-row>
+    <!-- Riga per eventi in arrivo -->
+    <ion-row>
+      <ion-col size="3">
+        <div class="category-heading">
+          <div
+            class="category-title-container"
+            (click)="toggleUpcomingExpansion()"
+          >
+            <h2>Eventi In arrivo</h2>
+            <ion-icon
+              *ngIf="!isMobile"
+              [name]="expandedUpcoming ? 'chevron-down-outline': 'chevron-forward-outline'"
+            ></ion-icon>
+          </div>
+          <ion-button class="see-more navigation-button" fill="clear" [routerLink]="['/upcoming-events']">
+            Vedi tutti
+            <ion-icon name="chevron-forward-outline"></ion-icon>
+          </ion-button>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col
+        *ngFor="let event of upComingEvents"
+        [sizeLg]="expandedUpcoming ? '3': '1'"
+        sizeMd="3"
+      >
+        <app-card
+          [routerLink]="['/event', event.eventID]"
+          [state]="{ event: event }"
+          [title]="event.title"
+          [imageUrl]="event.coverImage"
+          [isExpanded]="expandedUpcoming"
+        ></app-card>
+      </ion-col>
+
+      <ion-col *ngIf="upComingEvents.length === 0" size="12">
+        <div class="no-events-message">Nessun evento in arrivo disponibile</div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <div class="events-by-category">
+    <ng-container *ngFor="let category of getObjectKeys(groupedEvents)">
+      
+      <!-- Griglia per gli eventi di questa categoria -->
+      <ion-grid>
+        <ion-row>
+          <ion-col size="3">
+            <div class="category-heading" style="padding: 0">
+              <div
+                class="category-title-container"
+                (click)="toggleCategoryExpansion(category)"
+              >
+                <h2>{{category}}</h2>
+                <ion-icon
+                  *ngIf="!isMobile"
+                  [name]="expandedCategories[category] ? 'chevron-down-outline': 'chevron-forward-outline'"
+                ></ion-icon>
+              </div>
+              <ion-button class="see-more navigation-button" fill="clear" [routerLink]="['/category', category]">
+                Vedi tutti
+                <ion-icon name="chevron-forward-outline"></ion-icon>
+              </ion-button>
+            </div>
+          </ion-col>
+        </ion-row>
+
+        <ion-row>
+          <!-- Ciclo per le card degli eventi -->
+          <ion-col
+            *ngFor="let event of groupedEvents[category]"
+            [sizeLg]="expandedCategories[category] ? '3': '1'"
+            sizeMd="3"
+          >
+            <app-card
+              [routerLink]="['/event', event.eventID]"
+              [state]="{ event: event }"
+              [title]="event.title"
+              [imageUrl]="event.coverImage"
+              [isExpanded]="expandedCategories[category]"
+            ></app-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ng-container>
+  </div>
+
+
+  <app-footer></app-footer>
+</ion-content>
+
+<app-cart-component> </app-cart-component>
+
+
+
+
+

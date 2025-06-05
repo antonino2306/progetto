@@ -1,0 +1,70 @@
+.sheet-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.4vw;
+}
+
+.sheet-qty-row {
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+.sheet-quantity {
+  text-align: center;
+  font-weight: bold;
+}
+
+ion-item[lines="none"]:first-child {
+  margin-top: 4vw; // o il valore che preferisci
+  margin-bottom: 3vw;
+}
+
+.cart-button {
+  margin-top: 4vw;
+}
+
+h3 {
+  color: var(--text-color);
+}
+
+.btn {
+  background-color: var(--ion-color-primary, #1a1a4b);
+  border-radius: 100%;
+  font-size: 3vw;
+  --color: var(--secondary-text-color) !important;
+}
+
+.empty-cart-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--icon-color);
+  margin-top: 2rem;
+  font-size: 1.1rem;
+}
+
+.empty-cart-icon {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+  color: var(--icon-color);
+}
+.cart-timer-row {
+  margin-top: 4px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+
+.cart-timer {
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--timer-color);
+}
+
+
+ion-fab-button {
+  --color: var(--ion-button-text);
+}

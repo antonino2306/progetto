@@ -1,0 +1,124 @@
+ion-title {
+  font-size: 1.5rem;
+  font-weight: 900;
+  margin-top: 20px;
+  color: var(--text-color);
+}
+
+ion-button {
+  float: right;
+  --ion-color-contrast: var(--ion-button-text);
+}
+
+ion-item {
+  --background: var(--background-color);
+}
+
+.empty-message {
+  float: left;
+}
+
+.section {
+  display: flex;
+  flex-direction: col;
+}
+
+ion-card {
+  background: var(--card-background);
+}
+
+.show-card {
+  margin-bottom: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.show-card ion-card-header {
+  color: var(--text-color);
+  padding: 1rem;
+}
+
+.show-card ion-card-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.show-card ion-card-subtitle {
+  color: var(--text-color);
+  opacity: 0.9;
+}
+
+.show-card ion-card-subtitle p {
+  margin: 0.2rem 0;
+  font-size: 0.9rem;
+}
+
+.show-card ion-card-subtitle strong {
+  font-weight: 600;
+}
+
+.tickets-in-show {
+  padding: 0.5rem;
+}
+
+.ticket-item {
+  margin-bottom: 0.5rem;
+}
+
+.ticket-item:last-child {
+  margin-bottom: 0;
+}
+
+ion-card {
+  border-radius: 30px;
+  color: var(--ion-color-secondary);
+  --background: var(--card-background);
+
+  ion-button {
+    float: right;
+    margin: 5px;
+    color: var(--ion-color-secondary);
+  }
+
+  ion-card-title {
+    margin-bottom: 10px;
+  }
+
+  ion-list {
+    background: transparent;
+
+    ion-item {
+      --background: transparent;
+      --border-color: transparent;
+
+      ion-input {
+        --background: transparent;
+        --color: var(--icon-color);
+      }
+    }
+  }
+
+  ion-card-title {
+    margin-top: 20px;
+  }
+
+  .txtStar {
+    margin-right: 10px;
+  }
+
+  .custom-star-size {
+    font-size: 24px;
+    height: 24px;
+    width: 24px;
+  }
+
+  .starPos {
+    display: flex;
+    flex-direction: row;
+  }
+}
+
+.reviewExist {
+  padding: 20px;
+}

@@ -1,0 +1,27 @@
+ion-title {
+  color: var(--ion-color-light);
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+ion-card {
+  --background: var(--card-background);
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(var(--ion-color-primary-rgb, 56,128,255), 0.10);
+  margin: 24px;
+  padding: 8px 0;
+}
+
+ion-card-title {
+  color: var(--ion-color-primary);
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+ion-card-content p {
+  color: var(--ion-button-text);
+  font-size: 1rem;
+  margin-bottom: 12px;
+  line-height: 1.6;
+}

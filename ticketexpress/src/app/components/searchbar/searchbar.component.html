@@ -1,0 +1,212 @@
+<ng-template
+  *ngIf="!isMobile; then searchbar; else mobileSearchbar"
+></ng-template>
+
+<!-- Barra di ricerca versione web -->
+<ng-template #searchbar>
+  <div
+    class="searchbar"
+    [ngClass]="{
+      'home-page-searchbar': isInHomePage,
+      'header-searchbar': !isInHomePage
+    }"
+  >
+    <input
+      type="text"
+      name="title"
+      placeholder="Inserisci il nome dell'evento"
+      [(ngModel)]="title"
+    />
+    <div class="separator"></div>
+
+    <div class="category-filter-container">
+      <ion-select
+        aria-label="Categories"
+        interface="popover"
+        placeholder="Cateogoria"
+        [(ngModel)]="selectedCategory"
+        (ionChange)="onCategoryChange($event)"
+      >
+        <ion-select-option value="">Tutte le categorie</ion-select-option>
+
+        <ion-select-option
+          *ngFor="let category of categories"
+          value="{{ category.name }}"
+          >{{ category.name }}</ion-select-option
+        >
+      </ion-select>
+    </div>
+
+    <div class="price-filter-container">
+      <ion-button
+        size="small"
+        class="price-btn"
+        [id]="'price-btn-' + (isInHomePage ? 'home' : 'header')"
+      >
+        price
+      </ion-button>
+
+      <ion-popover
+        #pricePopover
+        [trigger]="'price-btn-' + (isInHomePage ? 'home' : 'header')"
+        side="bottom"
+        [keepContentsMounted]="false"
+      >
+        <ng-template>
+          <div class="price-range">
+            <ion-range
+              label="Min: {{ minPrice | currency : 'EUR' }}"
+              [(ngModel)]="minPrice"
+              min="0"
+              max="1000"
+              step="5"
+              pin="true"
+              (ionChange)="onMinPriceChange($event)"
+            >
+            </ion-range>
+
+            <ion-range
+              label="Max: {{ maxPrice | currency : 'EUR' }}"
+              [(ngModel)]="maxPrice"
+              min="0"
+              max="1000"
+              step="5"
+              pin="true"
+              (ionChange)="onMaxPriceChange($event)"
+            >
+            </ion-range>
+          </div>
+
+          <ion-button
+            class="applyPriceFilter"
+            (click)="applyPriceFilter(pricePopover)"
+            >Applica</ion-button
+          >
+        </ng-template>
+      </ion-popover>
+    </div>
+
+    <ion-datetime-button
+      datetime="datetime"
+      id="date-button"
+    ></ion-datetime-button>
+    <ion-popover
+      #datePopover
+      trigger="date-button"
+      side="bottom"
+      [keepContentsMounted]="true"
+    >
+      <ng-template>
+        <ion-datetime
+          #datetime
+          id="datetime"
+          presentation="date"
+          [showDefaultButtons]="true"
+          [value]="selectedDate"
+          (ionChange)="dateChanged($event)"
+        >
+          <ion-buttons slot="buttons">
+            <ion-button (click)="datetime.cancel(); datePopover.dismiss()"
+              >Annulla</ion-button
+            >
+            <ion-button (click)="datetime.confirm(); datePopover.dismiss()"
+              >Applica</ion-button
+            >
+          </ion-buttons>
+        </ion-datetime>
+      </ng-template>
+    </ion-popover>
+
+    <ion-button (click)="search()" size="small">
+      <ion-icon slot="icon-only" name="search-outline"></ion-icon>
+    </ion-button>
+  </div>
+</ng-template>
+
+<!-- Barra di ricerca versione mobile -->
+<ng-template #mobileSearchbar>
+  <div class="mobile-search">
+    <input
+      type="text"
+      name="title"
+      placeholder="Inserisci il nome dell'evento"
+      [(ngModel)]="title"
+    />
+    <ion-button (click)="search()" size="small">
+      <ion-icon slot="icon-only" name="search-outline"></ion-icon>
+    </ion-button>
+  </div>
+  <div class="filter-container">
+    <div class="price-filter-container">
+      <ion-button size="small" class="price-btn" id="price-btn"> price </ion-button>
+
+      <ion-popover
+        #pricePopover
+        trigger="price-btn"
+        side="bottom"
+        [keepContentsMounted]="true"
+      >
+        <ng-template>
+          <div class="price-range">
+            <ion-range
+              label="Min: {{ minPrice | currency : 'EUR' }}"
+              [(ngModel)]="minPrice"
+              min="0"
+              max="1000"
+              step="5"
+              pin="true"
+              (ionChange)="onMinPriceChange($event)"
+            >
+            </ion-range>
+
+            <ion-range
+              label="Max: {{ maxPrice | currency : 'EUR' }}"
+              [(ngModel)]="maxPrice"
+              min="0"
+              max="1000"
+              step="5"
+              pin="true"
+              (ionChange)="onMaxPriceChange($event)"
+            >
+            </ion-range>
+          </div>
+
+          <ion-button (click)="applyPriceFilter(pricePopover)"
+            >Applica</ion-button
+          >
+        </ng-template>
+      </ion-popover>
+    </div>
+
+    <ion-datetime-button
+      datetime="datetime"
+      id="date-button"
+    ></ion-datetime-button>
+    <ion-popover
+      #datePopover
+      trigger="date-button"
+      side="bottom"
+      [keepContentsMounted]="true"
+    >
+      <ng-template>
+        <ion-datetime
+          #datetime
+          id="datetime"
+          presentation="date"
+          [showDefaultButtons]="true"
+          [value]="selectedDate"
+          (ionChange)="dateChanged($event)"
+        >
+          <ion-buttons slot="buttons">
+            <ion-button (click)="datetime.cancel(); datePopover.dismiss()"
+              >Annulla</ion-button
+            >
+            <ion-button (click)="datetime.confirm(); datePopover.dismiss()"
+              >Applica</ion-button
+            >
+          </ion-buttons>
+        </ion-datetime>
+      </ng-template>
+    </ion-popover>
+  </div>
+</ng-template>

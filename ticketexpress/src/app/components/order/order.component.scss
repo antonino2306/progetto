@@ -1,0 +1,266 @@
+.order-container {
+  margin-bottom: 20px;
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.order-card {
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  overflow: hidden;
+  border-left: 4px solid var(--ion-color-primary);
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 5px;
+}
+
+.order-title-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+
+  ion-card-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--icon-color);
+    margin: 0;
+  }
+
+  .order-icon {
+    font-size: 1.8rem;
+    margin-right: 8px;
+    color: var(--ion-color-primary);
+  }
+}
+
+.order-details-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+
+  .detail-label {
+    color: var(--text-color);
+    opacity: 0.7;
+    font-size: 0.9rem;
+    margin-bottom: 4px;
+  }
+
+  .detail-value {
+    font-weight: 500;
+    color: var(--text-color);
+  }
+}
+
+.total-item {
+  margin-top: 8px;
+  grid-column: span 2;
+
+  .total-value {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--ion-color-primary);
+  }
+}
+
+.details-button {
+  --border-color: var(--ion-color-primary);
+  color: var(--icon-color) !important;
+  font-weight: 500;
+  transition: all 0.3s ease;
+
+  ion-icon {
+    margin-right: 8px;
+  }
+}
+
+.expanded-details {
+  margin-top: 16px;
+  animation: expandIn 0.9s ease;
+}
+
+@keyframes expandIn {
+  from {
+    opacity: 0;
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    max-height: 1000px;
+  }
+}
+
+.separator {
+  height: 1px;
+  background: var(--ion-color-light);
+  margin: 16px 0;
+}
+
+.show-details {
+  padding: 16px;
+  background-color: rgba(var(--ion-color-primary-rgb), 0.05);
+  border-radius: 12px;
+  margin-bottom: 16px;
+}
+
+.show-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+
+  .show-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--ion-color-primary);
+    margin: 0;
+  }
+
+  .show-icon {
+    font-size: 1.4rem;
+    margin-right: 8px;
+    color: var(--ion-color-primary);
+  }
+}
+
+.show-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.show-info-item {
+  display: flex;
+  align-items: center;
+
+  ion-icon {
+    margin-right: 8px;
+    font-size: 1.1rem;
+    color: var(--icon-color);
+  }
+
+  span {
+    color: var(--text-color);
+  }
+}
+
+.tickets-list {
+  margin-top: 16px;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.tickets-title {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--text-color);
+}
+
+.ticket-item {
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(var(--ion-color-light-rgb), 0.5);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &.hidden {
+    display: none;
+  }
+}
+
+.ticket-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ticket-id,
+.ticket-holder {
+  display: flex;
+  align-items: center;
+
+  ion-icon {
+    margin-right: 6px;
+    color: var(--icon-color);
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .show-details {
+    background-color: rgba(var(--ion-color-primary-rgb), 0.15);
+  }
+
+  .tickets-list {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+
+  .order-card {
+    border-left-color: var(--ion-color-primary-shade);
+    --background: #091024; // Sfondo blu scuro
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+
+    &:hover {
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+      background-color: #0b1227;
+    }
+  }
+
+  .show-details {
+    background-color: rgba(30, 42, 87, 0.4);
+  }
+
+  ion-card-header {
+    --background: transparent;
+  }
+}
+
+// Responsività
+@media (max-width: 768px) {
+  .order-details-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .total-item {
+    grid-column: 1;
+  }
+
+  .show-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ticket-details {
+    flex-direction: column;
+    align-items: flex-start;
+
+    .ticket-holder {
+      margin-top: 6px;
+    }
+  }
+}

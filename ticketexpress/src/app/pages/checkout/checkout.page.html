@@ -1,0 +1,54 @@
+<app-header [showBackButton]="true"></app-header>
+<ion-content>
+  <div class="upperCheckout" [ngClass]="{'mobile-layout': isMobile}">
+    <div class="ticketHolder" *ngIf="cart.length > 0">
+      <p class="checkout-title">{{cart[whichFormTicket].title}}</p>
+      <div class="formStyle">
+        <form [formGroup]="ticketform" (ngSubmit)="onSubmit()">
+          <div formArrayName="tickets" *ngIf="tickets">
+            <div  *ngFor="let ticket of tickets.controls; let i = index" [formGroupName]="i"
+              [ngStyle]="{ 'margin-top': i === 0 ? '0' : '2vw' }">
+              <p class = "ticket">Biglietto {{i + 1}}:</p>
+              <p class="form-label">Nome
+                <span style="color: red" *ngIf="ticket.get('firstName')?.touched && ticket.get('firstName')?.hasError('required')"> - Il nome è obbligatorio</span>
+              </p>
+              <ion-item>
+                <ion-input formControlName="firstName"></ion-input>
+              </ion-item>
+              <p class="form-label">Cognome
+                <span style="color: red" *ngIf="ticket.get('lastName')?.touched && ticket.get('lastName')?.hasError('required')"> - Il cognome è obbligatorio</span>
+              </p>
+              <ion-item>
+                <ion-input formControlName="lastName"></ion-input>
+              </ion-item>
+            </div>
+          </div>
+          <div class="button-ticket-container">
+            <ion-button expand="block" type="submit" class="button-ticket" [disabled]="ticketform.invalid">
+              Salva
+            </ion-button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Riepilogo per desktop -->
+    <app-riepilogo *ngIf="!isMobile"
+      [isCheckout]="true"
+      [isDisabled]="isDisabled()"
+      (formTicketSelected)="onFormTicketSelected($event)"
+      (isButtonClicked)="pay($event)">
+    </app-riepilogo>
+  </div>
+
+  <app-payment-method (pmID)="this.pmID = $event"></app-payment-method>
+  
+  <!-- Riepilogo per mobile (sotto payment-method) -->
+  <app-riepilogo *ngIf="isMobile" class="mobile-riepilogo"
+    [isCheckout]="true"
+    [isDisabled]="isDisabled()"
+    (formTicketSelected)="onFormTicketSelected($event)"
+    (isButtonClicked)="pay($event)">
+  </app-riepilogo>
+</ion-content>
+

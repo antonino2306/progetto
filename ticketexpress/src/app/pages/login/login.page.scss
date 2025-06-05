@@ -1,0 +1,160 @@
+ion-content {
+  min-height: 100vh;
+  font-family: 'Alexandria', sans-serif;
+  overflow-y: hidden;
+}
+
+.centered-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.login-container {
+  background: var(--background-color);
+  border-radius: 2vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4em 2em;
+}
+
+
+/* =========================
+NAME PAGE
+========================= */
+.name-page {
+  font-size: 3.5em;
+  font-weight: bold;
+  color: var(--icon-color);
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 10vh;
+}
+
+/* =========================
+FORM & LABELS
+========================= */
+.login-container form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.form-label {
+  font-size: 1em;
+  font-weight: 500;
+  color: var(--icon-color);
+  margin: 10px 0; 
+}
+
+/* =========================
+ION-ITEM & ERROR
+========================= */
+ion-item {
+  --background: var(--secondary-text-color) !important;
+  margin-bottom: 1vh;
+  --border-width: 1px;
+  --border-color: var(--ion-color-primary);
+  --border-radius: 10px;
+  overflow: hidden;
+  --padding-start: 0.5vw;
+  width: 40vw;
+}
+
+ion-input {
+  --color: var(--ion-color-secondary);
+}
+
+ion-item.login-error {
+  --border-color: #a51000;
+}
+
+ion-button {
+  --background: var(--ion-color-primary);
+  font-size: 1.2em;
+  --border-radius: 10px;
+  text-transform: none;
+  --padding-top: 10px;
+  --padding-bottom: 10px;
+  --padding-start: 30px;
+  --padding-end: 30px;
+  margin-bottom: 0;
+}
+
+ion-checkbox {
+  --checkbox-background: var(--icon-color);
+  --border-radius: 5px;
+  --border-color: var(--ion-color-primary);
+  --color-checked: var(--ion-color-primary);
+}
+
+.checkbox-remember-me {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 1em 0;
+}
+
+.checkbox-label {
+  font-size: 0.9em;
+  color: var(--icon-color);
+}
+
+.register-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between; // Link a sinistra, bottone a destra
+}
+
+.register-link, .password-link {
+  font-family: 'Alexandria', sans-serif;
+  font-size: 0.8em;
+  color: var(--icon-color);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+@media screen and (max-width: 1200px) {
+  ion-item {
+    width: 60vw;
+  }
+}
+
+@media screen and (max-width: 768px) {
+
+  ion-item {
+    width: 90vw;
+  }
+
+  .register-row {
+    flex-direction: column-reverse;
+  }
+
+  ion-button {
+    font-size: 1em;
+    --padding-top: 0;
+    --padding-bottom: 0;
+    --padding-start: 20px;
+    --padding-end: 20px;
+    margin-bottom: 10px;
+    width: 70%;
+  }
+}
+
+
+@media screen and (min-width: 1200px) {
+  .login-container {
+    box-shadow: 
+    0 10px 20px rgba(0, 0, 0, 0.1),  /* Ombra distante e sfumata */
+    0 6px 6px rgba(0, 0, 0, 0.15),   /* Ombra media */
+    0 2px 3px rgba(0, 0, 0, 0.2);    /* Ombra vicina e definita */
+    
+  /* Opzionale: aggiungi un leggero bordo per definire meglio i contorni */
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  }
+}
+

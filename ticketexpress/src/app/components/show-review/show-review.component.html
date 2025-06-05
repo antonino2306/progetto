@@ -1,0 +1,94 @@
+<div class="expTicks">
+    <ion-title><b>Lascia una recensione:</b></ion-title>
+    <ion-item>
+      <ion-input
+        label="Cerca biglietto:"
+        [(ngModel)]="inputTicketExp"
+        (ionInput)="filteringTicketsExp($event)"
+        #ionInputEl
+        >
+      </ion-input>
+    </ion-item>
+    
+    <div *ngFor="let show of showTicketExpired">
+      <ion-card class="show-card">
+        <ion-card-header>
+          <ion-card-title>{{show.title}}</ion-card-title>
+          <ion-card-subtitle>
+            Data: {{show.startDate | date:'dd/MM/yyyy' }}
+          </ion-card-subtitle>
+        </ion-card-header>
+
+        <ion-card-content class="tickets-in-show">
+          <div *ngFor="let expTicket of ticketExpired"  class="ticket-item">
+            <div *ngIf="expTicket.showID === show.showID">
+              <app-ticket
+              [eventName]="expTicket.title"
+              [artist]="expTicket.name"
+              [date]="expTicket.startDate"
+              [location]="expTicket.locationName"
+              [showID]="expTicket.showID"
+              [ticketID]="expTicket.ticketID"
+              [dateNC]="expTicket.endDateNC"
+              [statusTicketDB]="expTicket.status"
+              [holderName]="expTicket.holderName"
+              [holderSurname]="expTicket.holderSurname"
+              [notExp] = "false"
+              >
+            </app-ticket>
+            </div>
+          </div>
+        </ion-card-content>
+        
+        <!-- Mostra recensione esistente se presente -->
+        <div *ngIf="hasReviewForShow(show.showID)" class="reviewExist">
+          <ion-card-title><b>Recensione:</b></ion-card-title> 
+          <ion-card-subtitle><i>{{getReviewForShow(show.showID).description}}</i></ion-card-subtitle>
+          <ion-card-title><b>Voto:</b></ion-card-title>
+          <ion-card-subtitle>
+            <div class="starPos">
+              <ion-icon
+                *ngFor="let star of stars; let i = index"
+                [name]="getStarIconForReview(i, getReviewForShow(show.showID).rate)"
+                color="primary"
+                class="custom-star-size">
+              </ion-icon>
+            </div>
+          </ion-card-subtitle>
+        </div>
+        
+        <!-- Form per scrivere una nuova recensione -->
+        <div *ngIf="!hasReviewForShow(show.showID)">
+          <ion-list>
+            <ion-item>
+              <p><b>Scrivi la tua recensione:</b></p>
+            </ion-item>
+            <ion-item>
+              <ion-input
+                label="Recensione:"
+                label-placement="start"
+                placeholder="Scrivi la tua recensione"
+                maxlength="100"
+                [counter]="true"
+                [ngModel]="getReviewContent(show.showID)"
+                (ngModelChange)="updateReviewContent(show.showID, $event)">
+              </ion-input>
+            </ion-item>
+            <ion-item>
+              <p class="txtStar"><b>Dai il tuo voto all'evento:</b></p>
+              <div class="starPos">
+                <ion-icon
+                  *ngFor="let star of stars; let i = index"
+                  [name]="getStarIcon(i, show.showID)"
+                  (click)="onStarClick($event, i, show.showID)"
+                  color="primary"
+                  class="custom-star-size">
+                </ion-icon>
+              </div>  
+            </ion-item>
+          </ion-list>
+          <ion-button fill="clear" color="success" (click)="sendReview(show.showID)">Lascia recensione</ion-button>
+        </div>
+      </ion-card>
+  </div>
+</div>

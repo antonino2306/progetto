@@ -1,0 +1,35 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>I tuoi biglietti</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="view-toggle-container" style="padding: 10px 10px 0 0">
+    <ion-button fill="clear" (click)="toggleCalendarView()">
+      <ion-icon [name]="isCalendarViewActive ? 'list-outline' : 'calendar-outline'" slot="icon-only"></ion-icon>
+      <span>{{isCalendarViewActive ? 'Lista' : 'Calendario'}}</span>
+    </ion-button>
+  </div>
+  <app-calendar *ngIf="isCalendarViewActive"></app-calendar>
+  <ion-grid *ngIf="!isCalendarViewActive">
+    <ion-row>
+      <ion-col size="3" *ngFor="let ticket of tickets">
+        <app-ticket
+          [eventName]="ticket.title"
+          [ticketID]="ticket.ticketID"
+          [artist]="ticket.name"
+          [date]="ticket.startDate"
+          [location]="ticket.locationName"
+          [statusTicketDB]="ticket.status"
+          [dateNC]="ticket.endDateNC"
+          [holderName]="ticket.holderName"
+          [holderSurname]="ticket.holderSurname"
+          [big]="true"
+        ></app-ticket>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+<app-cart-component> </app-cart-component>

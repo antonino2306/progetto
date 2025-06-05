@@ -1,0 +1,50 @@
+ion-header {
+  background-color: var(--background-color);
+  padding: 10px;
+}
+
+ion-toolbar {
+  --background: var(--background-color);
+}
+
+#signin {
+  color: var(--icon-color);
+  border-radius: 8px;
+  padding: 0.25em 0.5em;
+  text-transform: none;
+  font-weight: bold;
+
+  ion-icon {
+    font-size: 2em;
+  }
+}
+
+ion-title {
+  color: var(--icon-color);
+  font-weight: bold;
+  cursor: pointer;
+  flex: 0;
+}
+
+#user-info {
+  color: var(--icon-color);
+  font-size: 23px;
+}
+
+#cart-btn {
+  color: var(--icon-color);
+  position: relative;
+  font-size: 1.5em;
+  --border-radius: 0;
+  --padding-end: 16px;
+}
+
+ion-badge {
+  position: absolute;
+  color: var(--ion-button-text);
+  top: -2px;
+  right: -14px;
+  font-size: 0.6rem;
+  border-radius: 50%;
+  //   color: var(--ion-color-primary)
+}

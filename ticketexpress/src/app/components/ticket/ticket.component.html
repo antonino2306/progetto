@@ -1,0 +1,50 @@
+<ion-card>
+  <ion-card-header>
+    <div *ngIf="changeNameVar; then change; else noChange"></div>
+    <ng-template #change>
+      <ion-list>
+      <ion-item>
+          <p><b>Proprietario attuale:</b> {{holderName}} {{holderSurname}}</p>
+        </ion-item>
+        <ion-item>
+          <ion-input
+            label="Nome sostitutivo:"
+            label-placement="start"
+            [(ngModel)]="newHolderName "
+            >
+          </ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-input
+            label="Cognome sostitutivo:"
+            label-placement="start"
+            [(ngModel)]="newHolderSurname "
+            >
+          </ion-input>
+        </ion-item>
+      </ion-list>
+    </ng-template>
+    <ng-template #noChange>
+        <ion-card-title>
+        <b>{{eventName}}</b> 
+        </ion-card-title>
+        <ion-card-subtitle><b>Artista:</b> {{artist}}</ion-card-subtitle>
+        <ion-card-subtitle><b>Data di inizio:</b> {{date | date: 'dd-M-y'}}</ion-card-subtitle>
+        <ion-card-subtitle><b>Luogo:</b> {{location}}</ion-card-subtitle>
+        <ion-card-subtitle><b>ID biglietto:</b> {{ticketID}}</ion-card-subtitle>
+        <ion-card-subtitle><b>Proprietario:</b> {{holderName}} {{holderSurname}}</ion-card-subtitle>
+    </ng-template>
+  </ion-card-header>
+
+  <div *ngIf="notExp">
+  <div *ngIf="changeNameVar ; then changeButt else confButt"></div>
+  <ng-template #changeButt>
+    <ion-button fill="clear" color="success" (click)="changeHolder()">Conferma nominativo</ion-button>
+    <ion-button fill="clear" color="danger" (click)="exitChange()">Annulla modifiche</ion-button>
+  </ng-template>
+  <ng-template #confButt>
+      <ion-button fill="clear"  (click)="changeName()">Cambia nominativo</ion-button>
+  </ng-template>
+  </div>
+</ion-card>

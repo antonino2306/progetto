@@ -1,0 +1,98 @@
+<div class="user-page-section">
+  <div *ngFor="let order of userOrdersFiltered" class="order-container">
+    <ion-card class="order-card">
+      <ion-card-header>
+        <div class="order-header">
+          <div class="order-info">
+            <div class="order-title-container">
+              <ion-icon name="receipt-outline" class="order-icon"></ion-icon>
+              <ion-card-title>Ordine #{{ order.orderID }}</ion-card-title>
+            </div>
+            
+            <div class="order-details-grid">
+              <div class="detail-item">
+                <span class="detail-label">Quantità:</span>
+                <span class="detail-value">{{ order.quantity }} biglietti</span>
+              </div>
+              
+              <div class="detail-item">
+                <span class="detail-label">Data acquisto:</span>
+                <span class="detail-value">{{ order.purchaseDate | date:'dd/MM/yyyy HH:mm' }}</span>
+              </div>
+              
+              <div class="detail-item">
+                <span class="detail-label">Metodo di pagamento:</span>
+                <span class="detail-value">{{ order.pm_type }}</span>
+              </div>
+              
+              <div class="detail-item">
+                <span class="detail-label">Numero carta:</span>
+                <span class="detail-value">{{ order.cardNumber }}</span>
+              </div>
+              
+              <div class="detail-item total-item">
+                <span class="detail-label">Totale:</span>
+                <span class="detail-value total-value">{{ order.total | currency:'EUR':'symbol':'1.2-2' }}</span>
+              </div>
+            </div>
+          </div>
+  
+          <ion-button 
+            (click)="toggleOrderDetails(order.orderID)" 
+            fill="outline" 
+            class="details-button"
+            [ngClass]="{'active': showDetails && isOrderSelected(order.orderID)}">
+            <ion-icon [name]="showDetails && isOrderSelected(order.orderID) ? 'chevron-up-outline' : 'chevron-down-outline'"></ion-icon>
+            {{ showDetails && isOrderSelected(order.orderID) ? 'Nascondi dettagli' : 'Mostra dettagli' }}
+          </ion-button>
+        </div>
+        
+        <div *ngIf="isOrderSelected(order.orderID) && selectedOrderDetails" class="expanded-details">
+          <div class="separator"></div>
+          
+          <div *ngFor="let show of selectedOrderDetails.uniqueShows" class="show-details">
+            <div class="show-header">
+              <ion-icon name="ticket-outline" class="show-icon"></ion-icon>
+              <h3 class="show-title">{{ show.title }}</h3>
+            </div>
+            
+            <div class="show-info-grid">
+              <div class="show-info-item">
+                <ion-icon name="calendar-outline"></ion-icon>
+                <span>{{ show.startDate | date:'dd/MM/yyyy HH:mm' }}</span>
+              </div>
+              
+              <div class="show-info-item">
+                <ion-icon name="location-outline"></ion-icon>
+                <span>{{ show.locationName }}</span>
+              </div>
+              
+              <div class="show-info-item">
+                <ion-icon name="ticket-outline"></ion-icon>
+                <span>{{ show.ticketsForThisShow }} biglietti</span>
+              </div>
+            </div>
+            
+            <div class="tickets-list">
+              <h4 class="tickets-title">Biglietti</h4>
+              
+              <div *ngFor="let ticket of selectedOrderDetails.tickets" class="ticket-item"
+                   [ngClass]="{'hidden': ticket.showID !== show.showID}">
+                <div *ngIf="ticket.showID === show.showID" class="ticket-details">
+                  <div class="ticket-id">
+                    <ion-icon name="barcode-outline"></ion-icon>
+                    <span>{{ ticket.ticketID }}</span>
+                  </div>
+                  <div class="ticket-holder">
+                    <ion-icon name="person-outline"></ion-icon>
+                    <span>{{ ticket.holderName }} {{ ticket.holderSurname }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ion-card-header>
+    </ion-card>
+  </div>
+</div>

@@ -1,0 +1,67 @@
+ion-card {
+  border-radius: 20px;
+  color: var(--ion-color-secondary);
+  --background: var(--ion-color-secondary);
+
+  ion-button {
+    float: right;
+    margin: 5px;
+    color: var(--ion-button-text);
+
+    border-radius: 20px;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: rgba(85, 109, 247, 0.068);
+    }
+  }
+
+  ion-card-title {
+    margin-bottom: 10px;
+    color: var(--ion-button-text)
+  }
+
+  ion-list {
+    background: transparent;
+
+    ion-item {
+      --background: transparent;
+      --border-color: transparent;
+
+      --color: var(--ion-button-text);
+
+      ion-input {
+        --background: transparent;
+        border-bottom: 1px solid var(--icon-color);
+      }
+    }
+  }
+
+  .chip {
+    display: flex;
+    margin-bottom: 10px;
+
+    ion-chip {
+      float: right;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+  }
+
+  .txtStar {
+    margin-right: 10px;
+  }
+
+  .custom-star-size {
+    font-size: 24px; /* Dimensione intermedia tra medium (24px) e large (32px) */
+    height: 24px;
+    width: 24px;
+  }
+
+  .starPos {
+    display: flex;
+    flex-direction: row;
+  }
+}

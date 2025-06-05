@@ -1,0 +1,7 @@
+{
+  "name": "ticketexpress",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}

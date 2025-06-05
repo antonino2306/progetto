@@ -1,0 +1,20 @@
+<ion-card [ngClass]="[isExpanded ? 'expanded' : '']">
+  <div
+    class="image-container"
+    [class.expanded]="isExpanded"
+    [style.background-image]="'url(' + imageUrl + ')'"
+  ></div>
+  <ion-card-header class="event-name">
+    <ion-card-title>{{ title }}</ion-card-title>
+  </ion-card-header>
+  <ion-card-header
+    *ngIf="!myTicket"
+    class="details"
+    [ngStyle]="{ display: isExpanded ? 'flex' : 'none' }"
+  >
+    <ion-button fill="clear">
+      Mostra dettagli
+      <ion-icon name="chevron-forward-outline"></ion-icon>
+    </ion-button>
+  </ion-card-header>
+</ion-card>

@@ -1,0 +1,86 @@
+<footer class="footer" *ngIf="!isMobile">
+  <div class="footer-content">
+    <!-- Sezione Brand -->
+    <div class="footer-section brand-section">
+      <div class="brand">
+        <ion-icon name="ticket" class="brand-icon"></ion-icon>
+        <h3>TicketExpress</h3>
+      </div>
+      <p class="brand-description">
+        La tua piattaforma di fiducia per l'acquisto di biglietti per eventi. 
+        Scopri concerti, spettacoli teatrali, eventi sportivi e molto altro.
+      </p>
+      <div class="social-links">
+        <ion-button 
+          *ngFor="let social of socialLinks" 
+          fill="clear" 
+          shape="round"
+          size="small"
+          (click)="openSocialLink(social.url)"
+          class="social-btn">
+          <ion-icon [name]="social.icon" slot="icon-only"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+
+    <!-- Sezione Links Rapidi -->
+    <div class="footer-section">
+      <h4>Link Rapidi</h4>
+      <ul class="footer-links">
+        <li *ngFor="let link of quickLinks">
+          <a [routerLink]="link.route">{{ link.title }}</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Sezione Supporto -->
+    <div class="footer-section">
+      <h4>Supporto</h4>
+      <ul class="footer-links">
+        <li *ngFor="let link of supportLinks">
+          <a [routerLink]="link.route">{{ link.title }}</a>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Sezione Contatti -->
+    <div class="footer-section contact-section">
+      <h4>Contatti</h4>
+      <div class="contact-info">
+        <div class="contact-item">
+          <ion-icon name="mail" class="contact-icon"></ion-icon>
+          <span>antonino.randazzo11{{'@'}}community.unipa.it</span>
+        </div>
+        <div class="contact-item">
+          <ion-icon name="mail" class="contact-icon"></ion-icon>
+          <span>lorenzo.patti{{'@'}}community.unipa.it</span>
+        </div>
+        <div class="contact-item">
+          <ion-icon name="mail" class="contact-icon"></ion-icon>
+          <span>andrea.sanfilippo{{'@'}}community.unipa.it</span>
+        </div>
+        <div class="contact-item">
+          <ion-icon name="mail" class="contact-icon"></ion-icon>
+          <span>gloria.palumbopiccionello{{'@'}}community.unipa.it</span>
+        </div>
+        <div class="contact-item">
+          <ion-icon name="location" class="contact-icon"></ion-icon>
+          <span>Via dei Laureati 4, Palermo, Italia</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sezione Copyright -->
+  <div class="footer-bottom">
+    <div class="footer-bottom-content">
+      <p>&copy; {{ currentYear }} TicketExpress. Tutti i diritti riservati.</p>
+      <div class="payment-methods">
+        <span class="payment-text">Metodi di pagamento:</span>
+        <ion-icon name="card" class="payment-icon"></ion-icon>
+        <ion-icon name="logo-paypal" class="payment-icon"></ion-icon>
+        <ion-icon name="wallet" class="payment-icon"></ion-icon>
+      </div>
+    </div>
+  </div>
+</footer>

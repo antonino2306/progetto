@@ -1,0 +1,29 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start" *ngIf="isMobile && showBackButton">
+      <ion-back-button default-href="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title slot="start" (click)="redirectHome()">{{ title }}</ion-title>
+    <div *ngIf="!isMobile && showSearchbar">
+      <app-searchbar></app-searchbar>
+    </div>
+    <ion-buttons slot="end">
+      <div *ngIf="isAuthenticated; then userInfo; else signIn"></div>
+      <ng-template #userInfo>
+        <ion-button *ngIf="!isMobile"  id="user-info" [routerLink]="['/user']">
+          <ion-icon name="person-circle-outline"></ion-icon>
+        </ion-button>
+      </ng-template>
+      <ng-template #signIn>
+        <ion-button [fill]="isMobile ? 'clear' : 'outline' " id="signin" [routerLink]="['/login']">
+          <ion-icon *ngIf="isMobile" name="log-in-outline"></ion-icon>
+          <span *ngIf="!isMobile">Accedi</span>
+        </ion-button>
+      </ng-template>
+      <ion-button *ngIf="!isMobile" id="cart-btn" [routerLink]="['/cart']">
+        <ion-icon name="cart-outline"></ion-icon>
+        <ion-badge>{{ isAuthenticated ? cartElements : 0 }}</ion-badge>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>

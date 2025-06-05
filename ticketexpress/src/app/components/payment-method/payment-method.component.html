@@ -1,0 +1,146 @@
+<ion-card>
+  <ion-card-header>
+    <div *ngIf="viewPaymMeth; then visDPM; else insertPM"></div>
+    <ng-template #visDPM>
+      <ion-card-title class="paymentTitle">Predefinito:</ion-card-title>
+      <div *ngIf="existPaymentMeth; then existHPM; else notExistHPM"></div>
+      <ng-template #existHPM>
+        <ion-card-subtitle
+          ><b>Numero carta:</b> {{ defCardNumber }}</ion-card-subtitle
+        >
+        <ion-card-subtitle
+          ><b>Data di scadenza:</b> {{ defExpiredDate }}</ion-card-subtitle
+        >
+        <ion-card-subtitle
+          ><b>Proprietario:</b> {{ defHolderName }}</ion-card-subtitle
+        >
+      </ng-template>
+      <ng-template #notExistHPM>
+        <ion-card-subtitle
+          >Nessun metodo di pagamento inserito</ion-card-subtitle
+        >
+      </ng-template>
+      <ion-button class="insertPM" color="primary" (click)="changeVisDPM()"
+        >Cambia metodo di pagamento</ion-button
+      >
+    </ng-template>
+    <ng-template #insertPM>
+      <ion-card style="margin-bottom: 40px">
+        <ion-card-header>
+          <ion-card-title class="paymentTitle"
+            >Metodo predefinito corrente:</ion-card-title
+          >
+          <div *ngIf="existPaymentMeth; then existPM"></div>
+          <ng-template #existPM>
+            <ion-card-subtitle
+              ><b>Numero carta:</b> {{ defCardNumber }}</ion-card-subtitle
+            >
+            <ion-card-subtitle
+              ><b>Data di scadenza:</b> {{ defExpiredDate }}</ion-card-subtitle
+            >
+            <ion-card-subtitle
+              ><b>Proprietario:</b> {{ defHolderName }}</ion-card-subtitle
+            >
+          </ng-template>
+        </ion-card-header>
+      </ion-card>
+      <div class="positionPM">
+        <div class="exPM">
+          <ion-card-title class="paymentTitle"
+            >Cambia metodo di pagamento predefinito:</ion-card-title
+          >
+          <ion-card-subtitle *ngIf="payMeths.length == 1">Hai un solo metodo di pagamento</ion-card-subtitle>
+          <div *ngFor="let payMeth of payMeths; let i = index">
+            <div *ngIf="i !== indexDefPM">
+              <ion-card>
+                <ion-card-header>
+                  <ion-card-subtitle
+                    ><b>Numero di carta:</b>
+                    {{ payMeth.cardNumber }}</ion-card-subtitle
+                  >
+                  <ion-card-subtitle
+                    ><b>Data di scadenza:</b>
+                    {{ payMeth.expirationDate }}</ion-card-subtitle
+                  >
+                  <ion-card-subtitle
+                    ><b>Proprietario:</b>
+                    {{ payMeth.cardHolderName }}</ion-card-subtitle
+                  >
+                </ion-card-header>
+                <ion-button
+                  fill="clear"
+                  color="danger"
+                  (click)="deletePM(payMeth.pmID)"
+                  >Elimina metodo di pagamento</ion-button
+                >
+                <ion-button
+                  fill="clear"
+                  class="set-pm"
+                  (click)="setDefaultPM(payMeth.pmID)"
+                  >Imposta come predefinito</ion-button
+                >
+              </ion-card>
+            </div>
+          </div>
+        </div>
+        <div class="newPM">
+          <ion-card-title class="paymentTitle"
+            >Inserisci nuovo metodo di pagamento:</ion-card-title
+          >
+          <p style="color: red">{{ this.expirationDateError }}</p>
+          <ion-list>
+            <ion-item>
+              <ion-input
+                placeholder="Numero della carta"
+                maxlength="19"
+                [value]="cardNumber"
+                (ionInput)="onCardNumberInput($event)"
+                (keydown)="bloccaCaratteri($event)"
+              >
+              </ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-input
+                placeholder="Inserire data di scadenza [MM/YY]"
+                maxlength="5"
+                [value]="expirationDate"
+                (ionInput)="onExpirationDateInput($event)"
+                (keydown)="bloccaCaratteri($event)"
+              >
+              </ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-input
+                placeholder="CVC"
+                maxlength="3"
+                [(ngModel)]="cvc"
+                (keydown)="bloccaCaratteri($event)"
+              >
+              </ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-input
+                placeholder="Tipologia di pagamento"
+                [(ngModel)]="type"
+              >
+              </ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-input
+                placeholder="Proprietario della carta"
+                [(ngModel)]="cardHolderName"
+              >
+              </ion-input>
+            </ion-item>
+            <ion-button
+              class="insertPM"
+              color="primary"
+              (click)="addPaymentMethod()"
+              >Inserisci nuovo metodo di pagamento</ion-button
+            >
+          </ion-list>
+        </div>
+      </div>
+    </ng-template>
+  </ion-card-header>
+</ion-card>

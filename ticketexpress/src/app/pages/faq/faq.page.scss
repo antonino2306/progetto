@@ -1,0 +1,29 @@
+ion-list {
+  margin: 24px 10vw;
+  background: transparent;
+}
+
+ion-item {
+  --background: var(--card-background, #fff);
+  border-radius: 12px;
+  margin: 12px 16px;
+  box-shadow: 0 2px 8px rgba(var(--ion-color-primary-rgb, 56,128,255), 0.08);
+  transition: box-shadow 0.2s;
+}
+
+ion-item:hover {
+  box-shadow: 0 4px 16px rgba(var(--ion-color-primary-rgb, 56,128,255), 0.16);
+}
+
+ion-label h2 {
+  color: var(--ion-color-primary);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+ion-label p {
+  color: var(--text-color);
+  font-size: 1rem;
+  margin-top: 0;
+}

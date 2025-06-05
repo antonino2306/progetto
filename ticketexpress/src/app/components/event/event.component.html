@@ -1,0 +1,37 @@
+<div class="user-page-section">
+  <div>
+    <ion-item>
+      <ion-input
+        label="Cerca evento:"
+        [(ngModel)]="inputFavorite"
+        (ionInput)="filteringFavorites()"
+        #ionInputEl
+      ></ion-input>
+    </ion-item>
+  </div>
+
+  <div>
+    <ion-list>
+      <div *ngIf="favoriteFiltered && favoriteFiltered.length > 0">
+        <div>
+          <div *ngFor="let favorite of favoriteFiltered; index as i">
+            <app-show-card
+              *ngIf="favoriteEventsInfoFiltered.length > 0"
+              [show]="favorite"
+              [eventID]="favoriteEventsInfoFiltered[i].eventID"
+              [eventTitle]="favoriteEventsInfoFiltered[i].title"
+            ></app-show-card>
+          </div>
+        </div>
+      </div>
+      <div
+        *ngIf="!favoriteFiltered || favoriteFiltered.length === 0"
+        class="empty-message"
+      >
+        <p *ngIf="!favorites || favorites.length === 0">
+          Non hai eventi tra i preferiti
+        </p>
+      </div>
+    </ion-list>
+  </div>
+</div>

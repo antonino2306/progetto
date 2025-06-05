@@ -1,0 +1,173 @@
+<ion-header *ngIf="isMobile" [translucent]="true">
+  <ion-toolbar>
+    <ion-back-button
+      defaultHref="/login"
+      slot="start"
+    ></ion-back-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="centered-container">
+    <div class="register-container">
+      <h1 class="name-page">Crea un nuovo account</h1>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <p class="form-label">
+          Nome
+          <span
+            style="color: red"
+            *ngIf="registerForm.get('firstName')?.touched && registerForm.get('firstName')?.hasError('required')"
+          >
+            - Il nome è obbligatorio</span
+          >
+        </p>
+        <ion-item>
+          <ion-input formControlName="firstName"></ion-input>
+        </ion-item>
+
+        <p class="form-label">
+          Cognome
+          <span
+            style="color: red"
+            *ngIf="registerForm.get('lastName')?.touched && registerForm.get('lastName')?.hasError('required')"
+          >
+            - Il cognome è obbligatorio</span
+          >
+        </p>
+        <ion-item>
+          <ion-input formControlName="lastName"></ion-input>
+        </ion-item>
+
+        <p class="form-label">
+          Email
+          <span
+            style="color: red"
+            *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.hasError('email')"
+          >
+            - Inserisci un'email valida</span
+          >
+        </p>
+        <ion-item>
+          <ion-input formControlName="email"></ion-input>
+        </ion-item>
+
+        <p class="form-label">
+          Password
+          <span
+            style="color: red"
+            *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.hasError('required')"
+          >
+            - La password è obbligatoria
+          </span>
+          <span
+            style="color: red"
+            *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.hasError('minLength')"
+          >
+            - {{ registerForm.get('password')?.getError('minLength') }}
+          </span>
+          <span
+            style="color: red"
+            *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.hasError('invalidPassword')"
+          >
+            - {{ registerForm.get('password')?.getError('invalidPassword') }}
+          </span>
+        </p>
+
+        <ion-item>
+          <ion-input
+            [type]="passwordFieldType"
+            formControlName="password"
+          ></ion-input>
+        </ion-item>
+
+        <p class="form-label">
+          Conferma Password
+          <span
+            style="color: red"
+            *ngIf="registerForm.get('confirmPassword')?.touched && registerForm.get('confirmPassword')?.hasError('required')"
+          >
+            - La conferma della password è obbligatoria
+          </span>
+          <span
+            style="color: red"
+            *ngIf="registerForm.get('confirmPassword')?.touched && registerForm.errors?.['passwordMismatch']"
+          >
+            - Le password non corrispondono
+          </span>
+        </p>
+        <ion-item>
+          <ion-input
+            [type]="passwordFieldType"
+            formControlName="confirmPassword"
+          ></ion-input>
+        </ion-item>
+
+        <div class="checkbox-container">
+          <ion-checkbox
+            slot="start"
+            (ionChange)="togglePasswordVisibility($event)"
+          ></ion-checkbox>
+          <ion-label>Mostra password</ion-label>
+        </div>
+
+        <div class="checkbox-container">
+          <ion-checkbox
+            formControlName="rememberMe"
+            slot="start"
+          ></ion-checkbox>
+          <ion-label>Mantieni accesso</ion-label>
+        </div>
+
+        <ion-button
+          type="submit"
+          expand="block"
+          [disabled]="registerForm.invalid"
+        >
+          Registrati
+        </ion-button>
+      </form>
+    </div>
+  </div>
+  <ion-modal [isOpen]="isModalOpen">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Sceglie le tue categorie preferite</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="onModalClose()">
+              <ion-icon slot="icon-only" name="close-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content class="ion-padding">
+        <ion-grid>
+          <ion-row style="padding: 0 10px">
+            <ion-col
+              *ngFor="let category of categories"
+              size="1"
+              size-md="1.5"
+              size-lg="1"
+            >
+              <app-category-card
+                [category]="category"
+                [class.overlay-selected]="isSelected(category.categoryID)"
+                (click)="toggleCategory(category.categoryID)"
+                [blockRedirect]="true"
+              ></app-category-card>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col>
+              <ion-button
+                expand="block"
+                (click)="onModalClose()"
+                class="ion-margin-top">
+              Conferma</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ion-content>

@@ -1,0 +1,24 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Eventi Preferiti</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-grid>
+    <ion-row>
+      <ion-col *ngFor="let favorite of favorites; index as i" size="">
+        <app-show-card *ngIf="eventsInfo.length > 0"
+          [show]="favorite"
+          [eventTitle]="eventsInfo[i].title"
+          [eventID]="eventsInfo[i].eventID"
+        ></app-show-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>
+
+<app-cart-component> </app-cart-component>
+
