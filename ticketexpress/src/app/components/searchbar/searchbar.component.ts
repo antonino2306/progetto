@@ -75,7 +75,6 @@ export class SearchbarComponent implements OnInit {
     this.selectedCategory = event.detail.value;
     console.log('Categoria selezionata:', this.selectedCategory);
   }
-
   dateChanged(event: CustomEvent) {
     this.selectedDate = event.detail.value;
   }

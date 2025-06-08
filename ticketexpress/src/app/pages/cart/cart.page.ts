@@ -70,19 +70,10 @@ export class CartPage implements OnInit, OnDestroy {
   }
 
   async decreaseQuantity(item: any) {
-    if (item.quantity >= 1) {
-      try {
-        await this.cartService.remove(item.id,false);
-      } catch (error) {
-        console.error('Errore aggiornando la quantità:', error);
-      }
-    }
-    if(item.quantity == 1 && this.cart.length == 1) {
-      try {
-        await this.cartService.remove(item.id,true);
-      } catch (error) {
-        console.error('Errore aggiornando la quantità:', error);
-      }
+    try {
+      await this.cartService.remove(item.id, this.cart.length === 1 && this.cart[0].quantity === 1 ? true : false);
+    } catch (error) {
+      console.error('Errore aggiornando la quantità:', error);
     }
 
   }

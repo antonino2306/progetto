@@ -137,7 +137,7 @@ export class CartService {
     });
   }
 
-  remove(showID: number,resetTimer: boolean  ,removeAll: boolean = false ) {
+  remove(showID: number, resetTimer: boolean, removeAll: boolean = false ) {
     const userId = this.auth.user.getValue()?.id;
     if (!userId) {
       console.error('User not authenticated');
@@ -149,7 +149,7 @@ export class CartService {
       .subscribe({
         next: async (response: any) => {
           if (response.success) {
-            console.log('Show removed from cart successfully');
+            console.log('Show removed from cart successfully' + showID);
 
             try {
               await this.fetchCart();
@@ -174,11 +174,19 @@ export class CartService {
             this.errorService.handleHttpError(response); // aggiunto
           }
         },
-        error: (error) => {
+        error: async (error) => {
           console.error('Error during removal:', error);
+          await this.fetchCart(); // aggiorna il carrello in caso di errore
+          if (this.cart.getValue().length === 0) {
+            // Se il carrello è vuoto, resetta il timer
+            this.cartTimer = null;
+            this.cartTimerExpiresAt = null;
+            localStorage.removeItem('cartTimerExpiresAt');
+          }
           this.errorService.handleHttpError(error); // aggiunto
         }
       });
+      
   }
 
   removeAll() {
@@ -289,7 +297,7 @@ export class CartService {
       .subscribe({
         next: (response: any) => {
           if (response.success) {
-            console.log('Seat unblocked successfully');
+            console.log('Seat unblocked successfully' + showID);
           } else {
             console.error('Error unblocking seat:', response.message);
             this.errorService.handleHttpError(response); // aggiunto

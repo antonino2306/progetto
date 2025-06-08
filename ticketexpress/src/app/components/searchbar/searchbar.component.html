@@ -16,6 +16,7 @@
       name="title"
       placeholder="Inserisci il nome dell'evento"
       [(ngModel)]="title"
+      (keydown.enter)="search()"
     />
     <div class="separator"></div>
 
