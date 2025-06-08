@@ -128,7 +128,7 @@
       </form>
     </div>
   </div>
-  <ion-modal [isOpen]="isModalOpen">
+  <ion-modal [isOpen]="isModalOpen" *ngIf="isMobile">
     <ng-template>
       <ion-header>
         <ion-toolbar>
@@ -145,9 +145,7 @@
           <ion-row style="padding: 0 10px">
             <ion-col
               *ngFor="let category of categories"
-              size="1"
-              size-md="1.5"
-              size-lg="1"
+              size="1.5"
             >
               <app-category-card
                 [category]="category"
@@ -161,7 +159,7 @@
             <ion-col>
               <ion-button
                 expand="block"
-                (click)="onModalClose()"
+                (click)="saveSelectedCategories()"
                 class="ion-margin-top">
               Conferma</ion-button>
             </ion-col>
@@ -170,4 +168,44 @@
       </ion-content>
     </ng-template>
   </ion-modal>
+
+
+  <!-- Sezione categorie per desktop -->
+  <div class="categories-section" *ngIf="!isMobile && showCategoriesSection">
+    <div class="categories-container">
+      <h2 class="categories-title">Scegli le tue categorie preferite</h2>
+      <p class="categories-subtitle">Seleziona le categorie che ti interessano per ricevere eventi personalizzati</p>
+      
+      <ion-grid class="categories-grid">
+        <ion-row>
+          <ion-col
+            *ngFor="let category of categories"
+            size="1"
+          >
+            <app-category-card
+              [category]="category"
+              [class.overlay-selected]="isSelected(category.categoryID)"
+              (click)="toggleCategory(category.categoryID)"
+              [blockRedirect]="true"
+            ></app-category-card>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <div class="categories-actions">
+        <ion-button
+          fill="clear"
+          (click)="skipCategories()"
+        >
+          Salta per ora
+        </ion-button>
+        <ion-button
+          (click)="saveSelectedCategories()"
+          [disabled]="selectedCategories.length === 0"
+        >
+          Conferma selezione
+        </ion-button>
+      </div>
+    </div>
+  </div>
 </ion-content>

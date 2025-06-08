@@ -31,14 +31,12 @@ class Cart {
   static async getCart(userID) {
     return new Promise((resolve, reject) => {
       db.all(
-        `SELECT S.showID as id, E.eventID, E.title, A.name, S.price, C.quantity, E.coverImage, 
+        `SELECT S.showID as id, E.eventID, E.title, S.price, C.quantity, E.coverImage, 
                 L.name as location_name, L.address, L.city, 
                 (S.price*C.quantity) as total
-         FROM Cart C, Event E, Partecipation P, Artist A, Show S, Location L
+         FROM Cart C, Event E, Show S, Location L
          WHERE C.showID = S.showID 
            AND S.eventID = E.eventID
-           AND E.eventID = P.eventID 
-           AND P.artistID = A.artistID 
            AND S.locationID = L.locationID 
            AND C.userID = ?`,
         [userID],

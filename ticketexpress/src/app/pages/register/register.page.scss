@@ -4,7 +4,6 @@
 ion-content {
   min-height: 100vh;
   font-family: "Alexandria", sans-serif;
-  overflow-y: hidden;
 }
 
 .centered-container {
@@ -194,5 +193,48 @@ ion-checkbox {
     font-size: 1.2em;
     font-weight: bold;
     z-index: 2;
+  }
+}
+
+.categories-section {
+  margin-top: 2rem;
+  padding: 2rem 0;
+  border-top: 1px solid var(--ion-color-light);
+}
+
+.categories-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.categories-title {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: var(--ion-color-primary);
+}
+
+.categories-subtitle {
+  text-align: center;
+  color: var(--ion-color-medium);
+  margin-bottom: 2rem;
+  font-size: 0.9rem;
+}
+
+.categories-grid {
+  margin-bottom: 2rem;
+}
+
+.categories-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+ion-modal {
+  ion-button {
+    margin-bottom: 5vh;
   }
 }

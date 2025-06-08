@@ -1,6 +1,6 @@
 .calendar-container {
-    padding: 20px;
-    background: var(--background-color);
+  padding: 20px;
+  background: var(--background-color);
 }
 
 .calendar-header {
@@ -27,13 +27,17 @@
     }
 
     ion-button {
-      --color: var(--icon-color);
+      color: var(--ion-color-primary);
 
       &:hover {
         --color: var(--ion-color-primary);
       }
     }
   }
+}
+
+.today-button {
+  color: var(--icon-color);
 }
 
 .weekdays {
@@ -232,7 +236,6 @@
 
 // Responsive design
 @media (max-width: 768px) {
-
   .calendar-container {
     padding: 10px;
   }

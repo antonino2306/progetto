@@ -70,6 +70,8 @@ export class RegisterPage implements OnInit {
   errorMessage: string = '';
   isMobile: boolean = false;
   isModalOpen: boolean = false;
+  showCategoriesSection: boolean = false;
+
   categories: Category[] = [];
   selectedCategories: number[] = [];
 
@@ -152,26 +154,50 @@ export class RegisterPage implements OnInit {
         this.registerForm.value.rememberMe
       );
       this.categories = await this.eventService.fetchCategories();
-      this.isModalOpen = true;
+      if (this.isMobile) {
+        this.isModalOpen = true;
+      } else {
+        this.showCategoriesSection = true;
+        // Scroll alla sezione categorie
+        setTimeout(() => {
+          const element = document.querySelector('.categories-section');
+          if (element) {
+            element.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 100);
+      }
     } catch (error: any) {
       console.error('Errore durante la registrazione:', error.message);
     }
   }
 
-  async onModalClose() {
+  skipCategories() {
+    // Naviga senza salvare categorie
+    this.router.navigate(['/']);
+  }
+
+  onModalClose() {
+    this.isModalOpen = false;
+    // Salva le categorie e naviga
+    this.router.navigate(['/']);
+  }
+
+  async saveSelectedCategories() {
     this.isModalOpen = false;
     try {
       await Promise.all(
-      this.selectedCategories.map(categoryID => {
-        console.log(categoryID);
-        return this.userService.addFavoriteCategory(categoryID)
-      }
-      ))
-      this.router.navigate(['']);
-    }catch (error: any) {
-      console.error('Errore durante l\'aggiunta delle categorie preferite:', error.message);
+        this.selectedCategories.map((categoryID) => {
+          console.log(categoryID);
+          return this.userService.addFavoriteCategory(categoryID);
+        })
+      );
+      this.router.navigate(['/']);
+    } catch (error: any) {
+      console.error(
+        "Errore durante l'aggiunta delle categorie preferite:",
+        error.message
+      );
     }
-    
   }
 
   toggleCategory(categoryId: number) {
