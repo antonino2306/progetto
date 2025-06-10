@@ -5,11 +5,9 @@ import {
   IonCardHeader,
   IonCardSubtitle,
   IonCardTitle,
-  IonIcon,
   IonButton,
   IonItem,
   IonList,
-  IonChip,
   IonInput,
 } from '@ionic/angular/standalone';
 import { FormsModule } from '@angular/forms';
@@ -39,7 +37,6 @@ export class TicketComponent implements OnInit {
   statusTicket: boolean = true;
   @Input() eventName: string = '';
   @Input() ticketID: number = 0;
-  @Input() artist: string = '';
   @Input() location: string = '';
   @Input() date: number = 0;
   @Input() dateNC: number = 0;
@@ -75,15 +72,6 @@ export class TicketComponent implements OnInit {
     } else if (this.statusTicketDB === 'expired') {
       this.statusTicket = true;
     }
-    // console.log(this.today.getTime() / 1000 < this.dateNC);
-    // // da mettere il <
-    // if (this.today.getTime() / 1000 > this.dateNC) {
-    //   this.statusTicket = false;
-    // } else {
-    //   this.statusTicket = true;
-    //   this.changeNameVar = false;
-    //   this.userService.changeTicketStatus(this.ticketID);
-    // }
     this.userService.getReview();
   }
 

@@ -1,6 +1,5 @@
 ion-header {
   background-color: var(--background-color);
-
 }
 
 ion-toolbar {
@@ -11,12 +10,11 @@ ion-toolbar {
   --padding-bottom: 10px;
 
   ion-button {
-    --color: var(--icon-color)
+    --color: var(--icon-color);
   }
-
 }
 
-ion-title{
+ion-title {
   font-weight: bold;
   font-size: 2em;
 }
@@ -31,15 +29,10 @@ ion-card {
   ion-card {
     margin: 20px;
   }
-  
-}
-
-.user-info {
-  --background: var(--ion-color-secondary);
 }
 
 .headerCard {
-  width: 100%; 
+  width: 100%;
   margin-bottom: 10px;
 }
 
@@ -77,7 +70,7 @@ ion-card-content {
   font-weight: 500;
 }
 
-ion-button{
+ion-button {
   float: right;
   --ion-color-contrast: var(--ion-button-text) !important;
 }
@@ -93,26 +86,25 @@ ion-item {
 }
 
 ion-item {
-
   ion-icon {
     color: var(--ion-button-text);
   }
 }
 
-.confPass{
-  margin-top:30px;
+.confPass {
+  margin-top: 30px;
 }
 
-.empty-message{
-  float:left;
+.empty-message {
+  float: left;
 }
 
-.cardNoWrap{
+.cardNoWrap {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px; 
-  justify-content: space-between; 
-  
+  gap: 10px;
+  justify-content: space-between;
+
   ion-card {
     flex: 0 0 calc(48% - 10px);
     max-width: calc(48% - 10px);
@@ -120,7 +112,7 @@ ion-item {
   }
 }
 
-.errorMess{
+.errorMess {
   color: red;
   margin-top: 20px;
   margin-left: 20px;
@@ -128,27 +120,157 @@ ion-item {
   font-size: 1em;
 }
 
-.apprMess{
+.apprMess {
   margin-top: 20px;
   margin-left: 20px;
   font-weight: bold;
   font-size: 1em;
 }
 
-.modifyBox{
+.modifyBox {
   flex: 1;
   border-radius: 20px;
 }
 
-.ModifyEmPass{
+.ModifyEmPass {
   display: flex;
   gap: 10vw;
   flex-wrap: nowrap;
   padding: 0 20px;
 }
 
-@media screen and (max-width: 768px) {
+.user-info {
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  background: var(--ion-color-secondary);
+  border-left: 4px solid var(--ion-color-primary);
+  animation: fadeInCard 0.5s ease-out;
 
+  ion-card-title {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--ion-color-primary);
+  }
+
+  ion-card-subtitle {
+    font-size: 1rem;
+    margin-bottom: 12px;
+    color: var(--text-color);
+    line-height: 1.5;
+  }
+
+  .payment-info {
+    // background: rgba(var(--ion-color-success-rgb), 0.05);
+    border: 1px solid rgba(var(--ion-color-success-rgb), 0.2);
+    border-radius: 12px;
+    padding: 16px;
+  }
+
+  .payment-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+
+    .payment-icon {
+      font-size: 1.2rem;
+      color: var(--ion-color-success);
+      margin-right: 8px;
+
+      &.no-payment {
+        color: var(--ion-color-medium);
+      }
+    }
+
+    .payment-label {
+      font-weight: 600;
+      color: var(--ion-color-primary);
+      font-size: 1rem;
+    }
+  }
+
+  .payment-details {
+    display: grid;
+    gap: 8px;
+  }
+
+  .payment-detail-item {
+    display: flex;
+    flex-direction: column;
+
+    .detail-label {
+      font-size: 0.85rem;
+      color: var(--ion-color-medium);
+      margin-bottom: 2px;
+    }
+
+    .detail-value {
+      font-weight: 500;
+      color: var(--ion-text-color);
+      font-size: 0.9rem;
+    }
+  }
+
+  .no-payment-info {
+    background: rgba(var(--ion-color-warning-rgb), 0.05);
+    border: 1px solid rgba(var(--ion-color-warning-rgb), 0.2);
+    border-radius: 12px;
+    padding: 16px;
+  }
+
+  .no-payment-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    gap: 6px;
+
+    .payment-label {
+      font-weight: 600;
+      color: var(--ion-color-primary);
+      font-size: 1rem;
+    }
+  }
+
+  .no-payment-message {
+    display: flex;
+    align-items: center;
+    color: var(--ion-color-medium);
+    font-size: 0.9rem;
+
+    .info-icon {
+      font-size: 1rem;
+      margin-right: 6px;
+      color: var(--ion-color-warning);
+    }
+  }
+
+  .no-payment-message {
+    display: flex;
+    align-items: center;
+    color: var(--ion-color-medium);
+    font-size: 0.9rem;
+
+    .info-icon {
+      font-size: 1rem;
+      margin-right: 6px;
+      color: var(--ion-color-warning);
+    }
+  }
+
+}
+
+@keyframes fadeInCard {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media screen and (max-width: 768px) {
   .ModifyEmPass {
     flex-direction: column;
     padding: 0;
@@ -157,5 +279,8 @@ ion-item {
   ion-toolbar {
     --padding-end: 0;
   }
-  
+
+  .buttons-container {
+    display: flex;
+  }
 }

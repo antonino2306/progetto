@@ -92,7 +92,7 @@ export class AllTicketComponent implements OnInit {
     this.reviewSubscription.unsubscribe();
   }
 
-  filteringTickets(event: any) {
+  filterTickets(event: any) {
     const ricerca = event.target.value?.toLowerCase() || '';
     this.ticketNotExpired = this.tickets.filter((ev) => {
       if (ev.status !== 'active') return false;

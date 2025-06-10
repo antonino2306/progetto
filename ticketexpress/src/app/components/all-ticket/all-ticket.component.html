@@ -6,7 +6,7 @@
         <ion-input
           label="Cerca biglietto:"
           [(ngModel)]="inputTicket"
-          (ionInput)="filteringTickets($event)"
+          (ionInput)="filterTickets($event)"
           #ionInputEl
         >
         </ion-input>
@@ -14,7 +14,6 @@
       <div *ngFor="let notExpTicket of ticketNotExpired">
         <app-ticket
           [eventName]="notExpTicket.title"
-          [artist]="notExpTicket.name"
           [date]="notExpTicket.startDate"
           [location]="notExpTicket.locationName"
           [ticketID]="notExpTicket.ticketID"

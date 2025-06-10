@@ -7,7 +7,11 @@
       </ion-button>
       <ion-button [fill]="isMobile ? 'clear' : 'outline'" (click)="logout()">
         <span *ngIf="!isMobile">Logout</span>
-        <ion-icon *ngIf="isMobile" slot="icon-only" name="log-out-outline"></ion-icon>
+        <ion-icon
+          *ngIf="isMobile"
+          slot="icon-only"
+          name="log-out-outline"
+        ></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -20,13 +24,18 @@
             <ion-icon name="help-circle-outline" slot="start"></ion-icon>
             <ion-label>FAQ</ion-label>
           </ion-item>
-          
+
           <ion-item button detail="false" [routerLink]="['/privacy']">
             <ion-icon name="shield-checkmark-outline" slot="start"></ion-icon>
             <ion-label>Privacy policy</ion-label>
           </ion-item>
-          
-          <ion-item button detail="false" lines="none" [routerLink]="['/termini']">
+
+          <ion-item
+            button
+            detail="false"
+            lines="none"
+            [routerLink]="['/termini']"
+          >
             <ion-icon name="document-text-outline" slot="start"></ion-icon>
             <ion-label>Termini e condizioni</ion-label>
           </ion-item>
@@ -47,27 +56,52 @@
       <ion-card-subtitle><b>ID utente:</b> {{userID}}</ion-card-subtitle>
       <ion-card-subtitle>
         <div *ngIf="existPaymentMeth; then existPM else notExistPM"></div>
-        <ng-template #existPM
-          ><b>Metodo di pagamento predefinito: </b>Numero carta:
-          {{defCardNumber}} // Data di scadenza: {{defExpiredDate}} //
-          Proprietario: {{defHolderName}}</ng-template
-        >
-        <ng-template #notExistPM
-          ><b>Metodo di pagamento predefinito: </b> Nessun metodo di pagamento
-          inserito</ng-template
-        >
+        <ng-template #existPM>
+          <div class="payment-info">
+              <div class="payment-header">
+                <ion-icon name="card-outline" class="payment-icon"></ion-icon>
+                <span class="payment-label">Metodo di pagamento predefinito</span>
+              </div>
+              <div class="payment-details">
+                <div class="payment-detail-item">
+                  <span class="detail-label">Numero carta:</span>
+                  <span class="detail-value">{{defCardNumber}}</span>
+                </div>
+                <div class="payment-detail-item">
+                  <span class="detail-label">Scadenza:</span>
+                  <span class="detail-value">{{defExpiredDate}}</span>
+                </div>
+                <div class="payment-detail-item">
+                  <span class="detail-label">Proprietario:</span>
+                  <span class="detail-value">{{defHolderName}}</span>
+                </div>
+              </div>
+            </div>
+        </ng-template>
+        <ng-template #notExistPM>
+          <div class="no-payment-info">
+              <div class="no-payment-header">
+                <ion-icon name="card-outline" class="payment-icon no-payment"></ion-icon>
+                <span class="payment-label">Metodo di pagamento predefinito</span>
+              </div>
+              <div class="no-payment-message">
+                <ion-icon name="information-circle-outline" class="info-icon"></ion-icon>
+                <span>Nessun metodo di pagamento configurato</span>
+              </div>
+            </div>
+        </ng-template>
       </ion-card-subtitle>
-      <ion-card-subtitle>
-        <ion-button color="danger" (click)="delProfile()"
-          >Elimina profilo</ion-button
-        >
+      <div class="buttons-container">
+        <ion-button color="danger" (click)="delProfile()">
+          Elimina profilo
+        </ion-button>
         <ion-button
           color="primary"
           [disabled]="modifyPage"
-          (click)="modifyProfile()"
-          >Modifica profilo</ion-button
-        >
-      </ion-card-subtitle>
+          (click)="modifyProfile()">
+          Modifica profilo
+        </ion-button>
+      </div>
     </ion-card-header>
   </ion-card>
   <div *ngIf="modifyPage; then modifyUser else notModifyUser"></div>
@@ -198,11 +232,14 @@
       <ion-segment-button value="Order" (click)="visualizeOrder()">
         <ion-label>Storico ordini</ion-label>
       </ion-segment-button>
-      <ion-segment-button value="Date" *ngIf="!isMobile" (click)="visualizeDate()">
+      <ion-segment-button
+        value="Date"
+        *ngIf="!isMobile"
+        (click)="visualizeDate()"
+      >
         <ion-label>Calendario eventi</ion-label>
       </ion-segment-button>
     </ion-segment>
-
 
     <app-event *ngIf="visEvent"></app-event>
     <app-all-ticket *ngIf="visTicket"></app-all-ticket>

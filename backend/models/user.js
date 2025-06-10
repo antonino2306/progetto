@@ -7,8 +7,7 @@ const bcrypt = require("bcrypt");
 class User {
   // creazione di un nuovo utente
   static async create(userData) {
-    const { firstName, lastName, email, password, address, city, postalCode } =
-      userData;
+    const { firstName, lastName, email, password } = userData;
 
     // Hash della password
     const salt = await bcrypt.genSalt(10);
@@ -16,9 +15,9 @@ class User {
 
     return new Promise((resolve, reject) => {
       db.run(
-        `INSERT INTO User (firstName, lastName, email, password, address, city, postalCode) 
-        VALUES (?, ?, ?, ?, ?, ?, ?)`,
-        [firstName, lastName, email, hashedPassword, address, city, postalCode],
+        `INSERT INTO User (firstName, lastName, email, password) 
+        VALUES (?, ?, ?, ?)`,
+        [firstName, lastName, email, hashedPassword],
         function (err) {
           if (err) reject(err);
           resolve(this.lastID);
@@ -246,10 +245,10 @@ class User {
   static async getTickets(userID) {
     return new Promise((resolve, reject) => {
       db.all(
-        `SELECT T.ticketID, T.holderName, T.holderSurname, T.status, E.title, A.name, O.orderID, L.name AS locationName,
+        `SELECT T.ticketID, T.holderName, T.holderSurname, T.status, E.title, O.orderID, L.name AS locationName,
         S.startDate*1000 AS startDate, S.endDate AS endDateNC, S.showID
-        FROM 'Order' O, Ticket T, Show S, Event E, Partecipation P, Artist A, Location L
-        WHERE O.orderID = T.orderID AND T.showID = S.showID AND S.eventID = E.eventID AND E.eventID = P.eventID AND A.artistID = P.artistID AND L.locationID = S.locationID AND O.userID = ?
+        FROM 'Order' O, Ticket T, Show S, Event E, Location L
+        WHERE O.orderID = T.orderID AND T.showID = S.showID AND S.eventID = E.eventID AND L.locationID = S.locationID AND O.userID = ?
         ORDER BY S.startDate ASC`,
         [userID],
         (err, rows) => {

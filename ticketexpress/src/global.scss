@@ -100,6 +100,18 @@ ion-toolbar {
 
 .user-page-section {
   margin: 30px 20vw 10vh 20vw;
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 // Effetto hover per i pulsanti
@@ -111,14 +123,13 @@ ion-toolbar {
   --border-style: solid;
   --border-color: var(--ion-color-primary);
   --color-hover: var(--ion-color-primary);
-  
+
   &:hover {
     --border-width: 2px;
     --background: transparent;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(47, 72, 143, 0.1);
   }
-
 }
 
 @media (max-width: 768px) {
@@ -130,4 +141,3 @@ ion-toolbar {
     margin: 20px 0;
   }
 }
-

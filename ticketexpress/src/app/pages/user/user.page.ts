@@ -34,7 +34,15 @@ import { AllTicketComponent } from 'src/app/components/all-ticket/all-ticket.com
 import { CalendarComponent } from 'src/app/components/calendar/calendar.component';
 import { PaymentMethodComponent } from '../../components/payment-method/payment-method.component';
 import { addIcons } from 'ionicons';
-import { documentTextOutline, ellipsisVerticalOutline, helpCircleOutline, logOutOutline, shieldCheckmarkOutline } from 'ionicons/icons';
+import {
+  cardOutline,
+  documentTextOutline,
+  ellipsisVerticalOutline,
+  helpCircleOutline,
+  informationCircleOutline,
+  logOutOutline,
+  shieldCheckmarkOutline,
+} from 'ionicons/icons';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -69,7 +77,7 @@ import { RouterLink } from '@angular/router';
     PaymentMethodComponent,
     IonIcon,
     IonPopover,
-    RouterLink
+    RouterLink,
   ],
 })
 export class UserPage implements OnInit {
@@ -126,7 +134,15 @@ export class UserPage implements OnInit {
       this.platform.is('android') ||
       this.platform.is('ios');
 
-      addIcons({logOutOutline, ellipsisVerticalOutline, helpCircleOutline, shieldCheckmarkOutline, documentTextOutline})
+    addIcons({
+      logOutOutline,
+      ellipsisVerticalOutline,
+      helpCircleOutline,
+      shieldCheckmarkOutline,
+      documentTextOutline,
+      cardOutline,
+      informationCircleOutline
+    });
   }
 
   firstName: string = '';
