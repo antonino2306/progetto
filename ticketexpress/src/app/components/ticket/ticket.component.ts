@@ -72,7 +72,7 @@ export class TicketComponent implements OnInit {
     } else if (this.statusTicketDB === 'expired') {
       this.statusTicket = true;
     }
-    this.userService.getReview();
+    this.userService.getReviews();
   }
 
   changeName() {

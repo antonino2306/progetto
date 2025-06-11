@@ -27,7 +27,7 @@ const app = express();
 const PORT = 3000;
 
 app.use(cors({
-    origin: ['http://localhost:8100', 'http://192.168.1.5:8100', 'http://192.168.1.9:8100', 'http://147.163.213.138:8100', 'http://147.163.216.19:8100'],
+    origin: ['http://localhost:8100'],
     credentials: true,
 }));
 

@@ -70,7 +70,7 @@ export class ShowReviewComponent  implements OnInit {
       this.showTicketExpiredOriginal = [...this.showTicketExpired]; // Salva l'array originale degli show
     });
 
-    this.userService.getReview();
+    this.userService.getReviews();
     this.reviewSubscription = this.userService.reviews.subscribe((reviews) => {
       this.reviews = reviews;
     });

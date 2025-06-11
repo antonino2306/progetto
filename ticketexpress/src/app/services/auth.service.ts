@@ -127,4 +127,20 @@ export class AuthService {
         throw new Error(err.error.message || 'Errore durante il logout');
       });
   }
+
+  getUserInfo(): Promise<any> {
+    return firstValueFrom(
+      this.http.get(`${this.baseUrl}/get-user`, { withCredentials: true })
+    )
+      .then((response: any) => {
+        if (response.success) {
+          console.log('User info:', response.user);
+          this.user.next(response.user);
+          return response.user; // Restituisci l'utente alla funzione chiamante
+        } else {
+          this.errorService.handleHttpError(response); // aggiunto
+          throw new Error(response.message || 'Errore nel recupero delle informazioni utente');
+        }
+      })
+  }
 }

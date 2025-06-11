@@ -156,12 +156,10 @@ ion-item {
   ion-card-subtitle {
     font-size: 1rem;
     margin-bottom: 12px;
-    color: var(--text-color);
     line-height: 1.5;
   }
 
   .payment-info {
-    // background: rgba(var(--ion-color-success-rgb), 0.05);
     border: 1px solid rgba(var(--ion-color-success-rgb), 0.2);
     border-radius: 12px;
     padding: 16px;
@@ -206,7 +204,7 @@ ion-item {
 
     .detail-value {
       font-weight: 500;
-      color: var(--ion-text-color);
+      color: var(--ion-button-text);
       font-size: 0.9rem;
     }
   }

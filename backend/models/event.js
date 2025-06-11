@@ -140,7 +140,9 @@ class Event {
                 FROM Event E, Show S, Category C, Partecipation P, Artist A
                 WHERE E.eventID = S.eventID AND E.categoryID = C.categoryID
                 AND P.eventID = E.eventID AND P.artistID = A.artistID
+                AND S.startDate >= ?
                 ORDER BY A.popularity DESC`,
+        [Date.now() / 1000],
         (err, rows) => {
           if (err) reject(err);
           resolve(rows);
@@ -153,10 +155,10 @@ class Event {
     return new Promise((resolve, reject) => {
       db.all(
         `SELECT E.eventID, E.title, E.description, E.coverImage, E.backgroundImage, C.name as category
-                FROM Event E, Category C
+                FROM Event E, Category C, Show S
                 WHERE E.categoryID = C.categoryID
-                    AND C.name = ?`,
-        [categoryName],
+                    AND C.name = ? AND S.startDate >= ?`,
+        [categoryName, Date.now() / 1000],
         (err, rows) => {
           if (err) reject(err);
           resolve(rows);
@@ -259,6 +261,22 @@ class Event {
       );
     });
   }
+
+  static async getReviewsByShowID(showID) {
+    return new Promise((resolve, reject) => {
+      db.all(
+        `SELECT R.reviewID, R.rate, R.description, R.date, U.firstName
+                FROM Reviews R, User U
+                WHERE R.showID = ? AND R.userID = U.userID`,
+        [showID],
+        (err, rows) => {
+          if (err) reject(err);
+          resolve(rows);
+        }
+      );
+    });
+  }
+
 }
 
 module.exports = Event;

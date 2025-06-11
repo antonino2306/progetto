@@ -70,6 +70,7 @@ import { Clipboard } from '@capacitor/clipboard';
     IonLabel
   ],
 })
+
 export class ShowCardComponent {
   @Input() show: Show = {
     showID: 0,
@@ -88,6 +89,7 @@ export class ShowCardComponent {
   @Input() artists: Artist[] = [];
   @Input() eventTitle!: string;
   @Input() eventID!: number;
+  reviews: any[] = []; // Placeholder for reviews, if needed
 
   isMobile: boolean = false;
   showButtons: boolean = false;
@@ -95,6 +97,7 @@ export class ShowCardComponent {
   showDetails: boolean = false;
   isModalOpen: boolean = false;
   isFavorite: boolean = false;
+  isEnded: boolean = false;
 
   isToastOpen: boolean = false;
   toastMessage: string = '';
@@ -156,6 +159,19 @@ export class ShowCardComponent {
       console.log('Artists fetched:', this.artists);
     } catch (error) {
       console.error('Error fetching artists:', error);
+    }
+  }
+
+  async ngOnChanges() {
+    if (Date.now() > this.show.endDate) {
+      this.isEnded = true;
+      try {
+        this.reviews = await this.eventService.getReviewByShowID(this.show.showID);
+        console.log('Reviews fetched:', this.reviews);
+      }
+      catch (error) {
+        console.error('Error fetching reviews:', error); 
+      }
     }
   }
 

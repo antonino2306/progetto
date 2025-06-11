@@ -2,8 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
-const { loginValidator, validate, registerValidator } = require('../middlewares/auth');
-
+const { loginValidator, validate, registerValidator, isAuthenticated } = require('../middlewares/auth');
 // La route auth di default è quella di login
 router.post('/', loginValidator, validate, async (req, res) => {
     console.log('Dati arrivati: ', req.body);
@@ -131,6 +130,31 @@ router.get('/is-authenticated', (req, res) => {
         return res.status(401).json({
             success: false,
             message: 'No active session'
+        });
+    }
+})
+
+router.get('/get-user', isAuthenticated, async (req, res) => {
+    const user = await User.findById(req.session.user.id);
+    console.log('user: ', user);
+    if (user) {
+        req.session.user = {
+            id: user.userID,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email
+        };
+        console.log("user session: ", req.session.user);
+
+        return res.status(200).json({
+            success: true,
+            user: req.session.user
+        });
+    }
+    else {
+        return res.status(404).json({
+            success: false,
+            message: 'User not found'
         });
     }
 })

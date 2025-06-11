@@ -19,9 +19,8 @@ import { addIcons } from 'ionicons';
 import { chevronForwardOutline, chevronDownOutline } from 'ionicons/icons';
 import { UserService } from 'src/app/services/user.service';
 import { Platform } from '@ionic/angular';
-import { FooterComponent } from "../../components/footer/footer.component";
+import { FooterComponent } from '../../components/footer/footer.component';
 import { CartComponent } from 'src/app/components/cart/cart.component';
-
 
 @Component({
   selector: 'app-home',
@@ -43,15 +42,12 @@ import { CartComponent } from 'src/app/components/cart/cart.component';
     CardComponent,
     RouterLink,
     FooterComponent,
-    CartComponent
-],
+    CartComponent,
+  ],
 })
-
 export class HomePage implements OnInit {
-
-
   popularEvents: Event[] = [];
-  upComingEvents: Event[] = []
+  upComingEvents: Event[] = [];
   images: string[] = [];
   categories: Category[] = [];
   favoriteCategories: Category[] = [];
@@ -62,11 +58,10 @@ export class HomePage implements OnInit {
   expandedCategories: { [key: string]: boolean } = {};
   isMobile: boolean = false;
 
-
   constructor(
     private eventService: EventService,
     private userService: UserService,
-    private platform: Platform,
+    private platform: Platform
   ) {
     addIcons({
       chevronForwardOutline,
@@ -84,44 +79,60 @@ export class HomePage implements OnInit {
     try {
       const eventsData = await this.eventService.fetchEvents();
 
+      this.popularEvents = eventsData.popularEvents.slice(0, 6);
+      this.images = this.popularEvents
+        .slice(0, 4)
+        .map((event) => event.backgroundImage);
+      this.upComingEvents = eventsData.upComingEvents.slice(0, 6);
+    } catch (error) {
+      console.error('Error fetching events:', error);
+    }
+  }
+
+  async ionViewWillEnter() {
+    try {
       const [categories, favoriteCategories] = await Promise.all([
         await this.eventService.fetchCategories(),
         await this.userService.fetchFavoriteCategories(),
       ]);
 
-      this.popularEvents = eventsData.popularEvents.slice(0, 6);
-      this.images = this.popularEvents.slice(0,4).map(event => event.backgroundImage)
-      this.upComingEvents = eventsData.upComingEvents.slice(0, 6);
       this.categories = categories;
       this.favoriteCategories = favoriteCategories;
-
+      
+      // Reset groupedEvents prima di popolare
+      this.groupedEvents = {};
+      
       if (this.favoriteCategories.length == 0) {
         this.favoriteCategories = this.categories.slice(6, 9);
       }
+      console.log("Favorite categories: ", this.favoriteCategories);
 
-      // Prepara un array di promise per il fetch degli eventi per ogni categoria
-      const eventFetchPromises = this.favoriteCategories.map(
-        async ({ name }) => {
-          const events = await this.eventService.fetchEventsByCategory(name);
-          return { name, events };
+      // Fetch eventi solo per le categorie preferite
+      for (const category of this.favoriteCategories) {
+        try {
+          console.log(`Fetching events for category: ${category.name}`);
+          const events = await this.eventService.fetchEventsByCategory(category.name);
+          
+          // Aggiungi solo se ci sono eventi per questa categoria
+          if (events && events.length > 0) {
+            this.groupedEvents[category.name] = events.slice(0, 6);
+            this.expandedCategories[category.name] = false;
+          }
+        } catch (error) {
+          console.error(`Error fetching events for category ${category.name}:`, error);
         }
-      );
+      }
 
-      // Attendi il completamento di tutte le promise
-      const results = await Promise.all(eventFetchPromises);
-
-      // Popola l'oggetto groupedEvents con i risultati
-      results.forEach(({ name, events }) => {
-        this.groupedEvents[name] = events.slice(0, 6);
-        this.expandedCategories[name] = false;
-      });
-
+      // Separate la logica per le categorie mostrate nella UI
       if (this.isMobile) {
         this.categories = this.categories.slice(0, 3);
       } else {
         this.categories = this.categories.slice(0, 4);
       }
-      console.log('Fetched events:', this.groupedEvents);
+      
+      console.log('Final groupedEvents:', this.groupedEvents);
+      console.log('Number of categories in groupedEvents:', Object.keys(this.groupedEvents).length);
+      
     } catch (error) {
       console.error('Error fetching events:', error);
     }
@@ -148,5 +159,4 @@ export class HomePage implements OnInit {
   getObjectKeys(obj: any): string[] {
     return Object.keys(obj);
   }
-  
 }

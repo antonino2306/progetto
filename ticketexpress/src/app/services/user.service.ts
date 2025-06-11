@@ -2,14 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
-import {
-  BehaviorSubject,
-  catchError,
-  first,
-  firstValueFrom,
-  map,
-  Observable,
-} from 'rxjs';
+import { BehaviorSubject, firstValueFrom } from 'rxjs';
 import { Category } from './event.service';
 import { ErrorService } from './error.service';
 
@@ -29,8 +22,8 @@ export class UserService {
   tickets: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   paymentMethod: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   reviews: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
-  
-constructor(
+
+  constructor(
     private http: HttpClient,
     private auth: AuthService,
     private router: Router,
@@ -40,7 +33,7 @@ constructor(
       if (authUser) {
         this.user.next(authUser);
         this.fetchFavorites();
-        this.getReview();
+        this.getReviews();
       }
     });
   }
@@ -127,6 +120,7 @@ constructor(
           if (response.success) {
             console.log('Email modified successfully!');
             try {
+              await this.auth.getUserInfo();
             } catch (error) {
               console.error('Error on fetching User:', error);
             }
@@ -288,7 +282,7 @@ constructor(
           if (response.success) {
             console.log('Ticket holder changed successfully!');
             const currentTickets = this.tickets.getValue();
-            const updatedTickets = currentTickets.map(ticket => {
+            const updatedTickets = currentTickets.map((ticket) => {
               if (ticket.ticketID === ticketID) {
                 return { ...ticket, holderName, holderSurname };
               }
@@ -336,8 +330,8 @@ constructor(
       .subscribe({
         next: async (response: any) => {
           if (response.success) {
-            console.log('Review add successfully!');  
-            this.getReview();
+            console.log('Review add successfully!');
+            this.getReviews();
           } else {
             console.error('Error on adding review:', response.message);
           }
@@ -348,22 +342,23 @@ constructor(
       });
   }
 
-  getReview(){  
-    this.http.get<any>(`${this.baseUrl}/get-review`, {withCredentials: true})
-    .subscribe({
-      next: (response: any) => {
-        if (response.success) {
-          console.log('Review got successfully!');
-          console.log("Reviews:", response.reviews);
-          this.reviews.next(response.reviews);
-        } else {
-          console.error('Error on getting review:', response.message);
-        }
-      },
-      error: (error) => {
-        console.error('Error on getting review:', error);
-      }
-    });
+  getReviews() {
+    this.http
+      .get<any>(`${this.baseUrl}/get-review`, { withCredentials: true })
+      .subscribe({
+        next: (response: any) => {
+          if (response.success) {
+            console.log('Review got successfully!');
+            console.log('Reviews:', response.reviews);
+            this.reviews.next(response.reviews);
+          } else {
+            console.error('Error on getting review:', response.message);
+          }
+        },
+        error: (error) => {
+          console.error('Error on getting review:', error);
+        },
+      });
   }
 
   addFavoriteCategory(categoryID: number): Promise<any> {
@@ -388,7 +383,6 @@ constructor(
   }
 
   fetchFavoriteCategories(): Promise<Category[]> {
-
     const auth = this.auth.user.getValue();
     if (!auth) {
       return Promise.resolve([]);
@@ -411,5 +405,4 @@ constructor(
         throw error;
       });
   }
-
 }

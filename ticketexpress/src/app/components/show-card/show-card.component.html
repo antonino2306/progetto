@@ -14,15 +14,18 @@
           >{{ show.locationName }} - {{ show.locationCity }}</ion-card-subtitle
         >
         <ion-chip
-          *ngIf="isMobile"
+          *ngIf="isMobile && !isEnded"
           [color]="show.availableTickets ? 'success' : 'danger'"
           [outline]="true"
         >
           {{ show.availableTickets ? "Biglietti disponibili" : "Esauriti" }}
         </ion-chip>
+        <ion-chip *ngIf="isMobile && isEnded" color="medium" outline="true">
+          Evento Concluso
+        </ion-chip>
       </div>
     </div>
-    <div *ngIf="!isMobile" class="buy-tickets">
+    <div *ngIf="!isMobile && !isEnded" class="buy-tickets">
       <div *ngIf="show.availableTickets; then add; else soldOut"></div>
       <ng-template #add>
         <div class="select-qty">
@@ -40,295 +43,336 @@
         <ion-card-title>Esauriti</ion-card-title>
       </ng-template>
     </div>
+    <div *ngIf="isEnded && !isMobile" class="ended-event-container">
+      <ion-chip color="medium" outline="true" class="ended-chip">
+        <ion-label>Evento Concluso</ion-label>
+      </ion-chip>
+    </div>
   </ion-card-header>
 
   <!-- Il modo in cui vengono visualizzati i dettagli dell'evento -->
   <!-- varia da browser ad applicazione mobile -->
-   <div class="details-wrapper" [class.expanded]="showDetails">
-     <div
-       *ngIf="!isMobile"
-       class="details-container"
-       [class.expanded]="showDetails"
-     >
-       <ion-card-content *ngIf="showDetails">
-         <div class="container">
-           <div [id]="'map-' + show.showID" class="map">
-             <div class="map-overlay">
-               <ion-icon name="location-outline"></ion-icon>
-               <span>Mappa del luogo</span>
-             </div>
-           </div>
-   
-           <div class="right">
-             <div class="event-details">
-               <div class="details-section">
-                 <div class="section-header">
-                   <ion-icon
-                     name="calendar-outline"
-                     class="section-icon"
-                   ></ion-icon>
-                   <h3 class="section-title">Dettagli evento</h3>
-                 </div>
-   
-                 <div class="details-grid">
-                   <div class="detail-item">
-                     <ion-icon name="time-outline"></ion-icon>
-                     <div class="detail-content">
-                       <span class="detail-label">Orario di inizio</span>
-                       <span class="detail-value">{{
-                         show.startDate | date : "HH:mm"
-                       }}</span>
-                     </div>
-                   </div>
-   
-                   <div class="detail-item">
-                     <ion-icon name="ticket-outline"></ion-icon>
-                     <div class="detail-content">
-                       <span class="detail-label">Biglietti disponibili</span>
-                       <span class="detail-value">{{
-                         show.availableTickets
-                       }}</span>
-                     </div>
-                   </div>
-                 </div>
-   
-                 <div class="artists-section" *ngIf="artists.length > 0">
-                   <div class="subsection-header">
-                     <ion-icon name="mic-outline"></ion-icon>
-                     <span>Artisti partecipanti</span>
-                   </div>
-                   <div class="artists-list">
-                     <ion-chip
-                       *ngFor="let artist of artists"
-                       class="artist-chip"
-                       color="primary"
-                       outline="true"
-                     >
-                       <ion-label>{{ artist.name }}</ion-label>
-                     </ion-chip>
-                   </div>
-                 </div>
-               </div>
-   
-               <div class="location-details">
-                 <div class="section-header">
-                   <ion-icon
-                     name="location-outline"
-                     class="section-icon"
-                   ></ion-icon>
-                   <h3 class="section-title">Dettagli location</h3>
-                 </div>
-   
-                 <div class="location-info">
-                   <div class="location-main">
-                     <h4 class="venue-name">{{ show.locationName }}</h4>
-                     <p class="venue-address">{{ show.locationAddress }}</p>
-                     <p class="venue-city">{{ show.locationCity }}</p>
-                   </div>
-   
-                   <div class="venue-stats">
-                     <div class="stat-item">
-                       <ion-icon name="people-outline"></ion-icon>
-                       <span>{{ show.locationMaxCapacity }} posti</span>
-                     </div>
-                   </div>
-                 </div>
-               </div>
-             </div>
-   
-             <div class="action-buttons">
-               <ion-button
-                 fill="clear"
-                 class="action-btn favorite-btn"
-                 [class.active]="isFavorite"
-                 (click)="toggleFavorite()"
-               >
-                 <ion-icon
-                   [name]="isFavorite ? 'heart' : 'heart-outline'"
-                   [color]="isFavorite ? 'danger' : ''"
-                 ></ion-icon>
-                 <span>{{
-                   isFavorite ? "Nei preferiti" : "Aggiungi ai preferiti"
-                 }}</span>
-               </ion-button>
-   
-               <ion-button
-                 fill="clear"
-                 class="action-btn share-btn"
-                 (click)="shareEvent()"
-               >
-                 <ion-icon name="share-outline"></ion-icon>
-                 <span>Condividi evento</span>
-               </ion-button>
-             </div>
-           </div>
-         </div>
-       </ion-card-content>
-     </div>
-   </div>
+  <div class="details-wrapper" [class.expanded]="showDetails">
+    <div
+      *ngIf="!isMobile"
+      class="details-container"
+      [class.expanded]="showDetails"
+    >
+      <ion-card-content *ngIf="showDetails">
+        <div class="container">
+          <div [id]="'map-' + show.showID" class="map">
+            <div class="map-overlay">
+              <ion-icon name="location-outline"></ion-icon>
+              <span>Mappa del luogo</span>
+            </div>
+          </div>
 
-  <ion-modal *ngIf="isMobile" [isOpen]="isModalOpen">
-  <ng-template>
-    <ion-header>
-      <ion-toolbar>
-        <ion-title>{{ eventTitle }}</ion-title>
-        <ion-buttons slot="end">
-          <ion-button (click)="toggleModal()">
-            <ion-icon name="close-outline"></ion-icon>
-          </ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-    </ion-header>
-    
-    <ion-content class="ion-padding">
-      <div class="map-container-mobile">
-        <!-- Mappa -->
-        <div [id]="'map-' + show.showID" class="map mobile-map">
-          <div class="map-overlay">
-            <ion-icon name="location-outline"></ion-icon>
-            <span>Mappa del luogo</span>
-          </div>
-        </div>
-        
-        <!-- Dettagli evento -->
-        <div class="event-details mobile-details">
-          <div class="details-section">
-            <div class="section-header">
-              <ion-icon name="calendar-outline" class="section-icon"></ion-icon>
-              <h3 class="section-title">Dettagli evento</h3>
-            </div>
-            
-            <div class="details-grid mobile-grid">
-              <div class="detail-item">
-                <ion-icon name="time-outline"></ion-icon>
-                <div class="detail-content">
-                  <span class="detail-label">Orario di inizio</span>
-                  <span class="detail-value">{{ show.startDate | date : "HH:mm" }}</span>
+          <div class="right">
+            <div class="event-details">
+              <div class="details-section">
+                <div class="section-header">
+                  <ion-icon
+                    name="calendar-outline"
+                    class="section-icon"
+                  ></ion-icon>
+                  <h3 class="section-title">Dettagli evento</h3>
+                </div>
+
+                <div class="details-grid">
+                  <div class="detail-item">
+                    <ion-icon name="time-outline"></ion-icon>
+                    <div class="detail-content">
+                      <span class="detail-label">Orario di inizio</span>
+                      <span class="detail-value">{{
+                        show.startDate | date : "HH:mm"
+                      }}</span>
+                    </div>
+                  </div>
+
+                  <div class="detail-item">
+                    <ion-icon name="ticket-outline"></ion-icon>
+                    <div class="detail-content">
+                      <span class="detail-label">Biglietti disponibili</span>
+                      <span class="detail-value">{{
+                        show.availableTickets
+                      }}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="artists-section" *ngIf="artists.length > 0">
+                  <div class="subsection-header">
+                    <ion-icon name="mic-outline"></ion-icon>
+                    <span>Artisti partecipanti</span>
+                  </div>
+                  <div class="artists-list">
+                    <ion-chip
+                      *ngFor="let artist of artists"
+                      class="artist-chip"
+                      color="primary"
+                      outline="true"
+                    >
+                      <ion-label>{{ artist.name }}</ion-label>
+                    </ion-chip>
+                  </div>
                 </div>
               </div>
-              
-              <div class="detail-item">
-                <ion-icon name="ticket-outline"></ion-icon>
-                <div class="detail-content">
-                  <span class="detail-label">Biglietti disponibili</span>
-                  <span class="detail-value">{{ show.availableTickets }}</span>
+
+              <div class="location-details">
+                <div class="section-header">
+                  <ion-icon
+                    name="location-outline"
+                    class="section-icon"
+                  ></ion-icon>
+                  <h3 class="section-title">Dettagli location</h3>
                 </div>
-              </div>
-            </div>
-            
-            <div class="artists-section" *ngIf="artists.length > 0">
-              <div class="subsection-header">
-                <ion-icon name="mic-outline"></ion-icon>
-                <span>Artisti partecipanti</span>
-              </div>
-              <div class="artists-list">
-                <ion-chip 
-                  *ngFor="let artist of artists" 
-                  class="artist-chip"
-                  color="primary"
-                  outline="true">
-                  <ion-label>{{ artist.name }}</ion-label>
-                </ion-chip>
-              </div>
-            </div>
-          </div>
-          
-          <!-- Dettagli location -->
-          <div class="location-details">
-            <div class="section-header">
-              <ion-icon name="location-outline" class="section-icon"></ion-icon>
-              <h3 class="section-title">Dettagli location</h3>
-            </div>
-            
-            <div class="location-info">
-              <div class="location-main">
-                <h4 class="venue-name">{{ show.locationName }}</h4>
-                <p class="venue-address">{{ show.locationAddress }}</p>
-                <p class="venue-city">{{ show.locationCity }}</p>
-              </div>
-              
-              <div class="venue-stats">
-                <div class="stat-item">
-                  <ion-icon name="people-outline"></ion-icon>
-                  <span>{{ show.locationMaxCapacity }} posti</span>
+
+                <div class="location-info">
+                  <div class="location-main">
+                    <h4 class="venue-name">{{ show.locationName }}</h4>
+                    <p class="venue-address">{{ show.locationAddress }}</p>
+                    <p class="venue-city">{{ show.locationCity }}</p>
+                  </div>
+
+                  <div class="venue-stats">
+                    <div class="stat-item">
+                      <ion-icon name="people-outline"></ion-icon>
+                      <span>{{ show.locationMaxCapacity }} posti</span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        
-        <!-- Action buttons -->
-        <div class="action-buttons mobile-actions">
-          <ion-button 
-            fill="clear" 
-            class="action-btn favorite-btn"
-            [class.active]="isFavorite"
-            (click)="toggleFavorite()">
-            <ion-icon
-              [name]="isFavorite ? 'heart' : 'heart-outline'"
-              [color]="isFavorite ? 'danger' : ''"
-            ></ion-icon>
-            <span>{{ isFavorite ? "Nei preferiti" : "Aggiungi ai preferiti" }}</span>
-          </ion-button>
-          
-          <ion-button 
-            fill="clear" 
-            class="action-btn share-btn"
-            (click)="shareEvent()">
-            <ion-icon name="share-outline"></ion-icon>
-            <span>Condividi evento</span>
-          </ion-button>
-        </div>
-        
-        <!-- Sezione acquisto biglietti -->
-        <div class="ticket-purchase-section">
-          <div *ngIf="show.availableTickets; then add; else soldOut"></div>
-          <ng-template #add>
-            <div class="mobile-purchase-container">
-              <div class="price-info">
-                <span class="price-label">Prezzo per biglietto</span>
-                <span class="price-value">{{ show.price | currency:'EUR':'symbol':'1.2-2' }}</span>
-              </div>
-              
-              <div class="select-qty mobile-qty">
-                <ion-button fill="outline" (click)="updateQty(-1)" [disabled]="quantity <= 1">
-                  <ion-icon slot="icon-only" name="remove-outline"></ion-icon>
-                </ion-button>
-                <span class="quantity-display">{{ quantity }}</span>
-                <ion-button fill="outline" (click)="updateQty(1)" [disabled]="quantity >= show.availableTickets">
-                  <ion-icon slot="icon-only" name="add-outline"></ion-icon>
-                </ion-button>
-              </div>
-              
-              <ion-button 
-                expand="block" 
-                class="add-to-cart-btn"
-                (click)="addToCart()">
-                <ion-icon name="cart-outline" slot="start"></ion-icon>
-                Aggiungi al carrello
+
+            <div class="action-buttons" *ngIf="!isEnded">
+              <ion-button
+                fill="clear"
+                class="action-btn favorite-btn"
+                [class.active]="isFavorite"
+                (click)="toggleFavorite()"
+              >
+                <ion-icon
+                  [name]="isFavorite ? 'heart' : 'heart-outline'"
+                  [color]="isFavorite ? 'danger' : ''"
+                ></ion-icon>
+                <span>{{
+                  isFavorite ? "Nei preferiti" : "Aggiungi ai preferiti"
+                }}</span>
+              </ion-button>
+
+              <ion-button
+                fill="clear"
+                class="action-btn share-btn"
+                (click)="shareEvent()"
+              >
+                <ion-icon name="share-outline"></ion-icon>
+                <span>Condividi evento</span>
               </ion-button>
             </div>
-          </ng-template>
-          
-          <ng-template #soldOut>
-            <div class="sold-out-container">
-              <ion-icon name="close-circle-outline"></ion-icon>
-              <span>Biglietti esauriti</span>
+            <div *ngIf="isEnded">
+              <div *ngIf="reviews.length == 0">Nessuna recensione disponibile</div>
+              <div *ngFor="let review of reviews">
+                <p>{{review.firstName}}</p>
+                <p>{{review.rate}}</p>
+                <p>{{review.description}}</p>
+                <p>{{review.date | date:"dd-mm-yyyy" }}</p>
+              </div>
             </div>
-          </ng-template>
+          </div>
         </div>
-        
-        <!-- Toast -->
-        <ion-toast
-          [isOpen]="isToastOpen"
-          [message]="toastMessage"
-          [duration]="2000"
-          [color]="toastColor"
-          position="bottom"
-          (didDismiss)="setToastOpen(false)">
-        </ion-toast>
-      </div>
-    </ion-content>
-  </ng-template>
-</ion-modal>
+      </ion-card-content>
+    </div>
+  </div>
+
+  <ion-modal *ngIf="isMobile" [isOpen]="isModalOpen">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>{{ eventTitle }}</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="toggleModal()">
+              <ion-icon name="close-outline"></ion-icon>
+            </ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-content class="ion-padding">
+        <div class="map-container-mobile">
+          <!-- Mappa -->
+          <div [id]="'map-' + show.showID" class="map mobile-map">
+            <div class="map-overlay">
+              <ion-icon name="location-outline"></ion-icon>
+              <span>Mappa del luogo</span>
+            </div>
+          </div>
+
+          <!-- Dettagli evento -->
+          <div class="event-details mobile-details">
+            <div class="details-section">
+              <div class="section-header">
+                <ion-icon
+                  name="calendar-outline"
+                  class="section-icon"
+                ></ion-icon>
+                <h3 class="section-title">Dettagli evento</h3>
+              </div>
+
+              <div class="details-grid mobile-grid">
+                <div class="detail-item">
+                  <ion-icon name="time-outline"></ion-icon>
+                  <div class="detail-content">
+                    <span class="detail-label">Orario di inizio</span>
+                    <span class="detail-value">{{
+                      show.startDate | date : "HH:mm"
+                    }}</span>
+                  </div>
+                </div>
+
+                <div class="detail-item">
+                  <ion-icon name="ticket-outline"></ion-icon>
+                  <div class="detail-content">
+                    <span class="detail-label">Biglietti disponibili</span>
+                    <span class="detail-value">{{
+                      show.availableTickets
+                    }}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="artists-section" *ngIf="artists.length > 0">
+                <div class="subsection-header">
+                  <ion-icon name="mic-outline"></ion-icon>
+                  <span>Artisti partecipanti</span>
+                </div>
+                <div class="artists-list">
+                  <ion-chip
+                    *ngFor="let artist of artists"
+                    class="artist-chip"
+                    color="primary"
+                    outline="true"
+                  >
+                    <ion-label>{{ artist.name }}</ion-label>
+                  </ion-chip>
+                </div>
+              </div>
+            </div>
+
+            <!-- Dettagli location -->
+            <div class="location-details">
+              <div class="section-header">
+                <ion-icon
+                  name="location-outline"
+                  class="section-icon"
+                ></ion-icon>
+                <h3 class="section-title">Dettagli location</h3>
+              </div>
+
+              <div class="location-info">
+                <div class="location-main">
+                  <h4 class="venue-name">{{ show.locationName }}</h4>
+                  <p class="venue-address">{{ show.locationAddress }}</p>
+                  <p class="venue-city">{{ show.locationCity }}</p>
+                </div>
+
+                <div class="venue-stats">
+                  <div class="stat-item">
+                    <ion-icon name="people-outline"></ion-icon>
+                    <span>{{ show.locationMaxCapacity }} posti</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Action buttons -->
+          <div class="action-buttons mobile-actions">
+            <ion-button
+              fill="clear"
+              class="action-btn favorite-btn"
+              [class.active]="isFavorite"
+              (click)="toggleFavorite()"
+            >
+              <ion-icon
+                [name]="isFavorite ? 'heart' : 'heart-outline'"
+                [color]="isFavorite ? 'danger' : ''"
+              ></ion-icon>
+              <span>{{
+                isFavorite ? "Nei preferiti" : "Aggiungi ai preferiti"
+              }}</span>
+            </ion-button>
+
+            <ion-button
+              fill="clear"
+              class="action-btn share-btn"
+              (click)="shareEvent()"
+            >
+              <ion-icon name="share-outline"></ion-icon>
+              <span>Condividi evento</span>
+            </ion-button>
+          </div>
+
+          <!-- Sezione acquisto biglietti -->
+          <div class="ticket-purchase-section">
+            <div *ngIf="show.availableTickets; then add; else soldOut"></div>
+            <ng-template #add>
+              <div class="mobile-purchase-container">
+                <div class="price-info">
+                  <span class="price-label">Prezzo per biglietto</span>
+                  <span class="price-value">{{
+                    show.price | currency : "EUR" : "symbol" : "1.2-2"
+                  }}</span>
+                </div>
+
+                <div class="select-qty mobile-qty">
+                  <ion-button
+                    fill="outline"
+                    (click)="updateQty(-1)"
+                    [disabled]="quantity <= 1"
+                  >
+                    <ion-icon slot="icon-only" name="remove-outline"></ion-icon>
+                  </ion-button>
+                  <span class="quantity-display">{{ quantity }}</span>
+                  <ion-button
+                    fill="outline"
+                    (click)="updateQty(1)"
+                    [disabled]="quantity >= show.availableTickets"
+                  >
+                    <ion-icon slot="icon-only" name="add-outline"></ion-icon>
+                  </ion-button>
+                </div>
+
+                <ion-button
+                  expand="block"
+                  class="add-to-cart-btn"
+                  (click)="addToCart()"
+                >
+                  <ion-icon name="cart-outline" slot="start"></ion-icon>
+                  Aggiungi al carrello
+                </ion-button>
+              </div>
+            </ng-template>
+
+            <ng-template #soldOut>
+              <div class="sold-out-container">
+                <ion-icon name="close-circle-outline"></ion-icon>
+                <span>Biglietti esauriti</span>
+              </div>
+            </ng-template>
+          </div>
+
+          <!-- Toast -->
+          <ion-toast
+            [isOpen]="isToastOpen"
+            [message]="toastMessage"
+            [duration]="2000"
+            [color]="toastColor"
+            position="bottom"
+            (didDismiss)="setToastOpen(false)"
+          >
+          </ion-toast>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 </ion-card>

@@ -68,6 +68,28 @@ ion-card-header {
   }
 }
 
+.ended-event-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 16px;
+  background: rgba(var(--ion-color-medium-rgb), 0.05);
+  border-radius: 8px;
+
+  .ended-chip {
+    --background: transparent;
+    --color: var(--ion-color-medium);
+    border: 1px solid var(--ion-color-medium);
+    font-weight: 500;
+    pointer-events: none;
+
+    ion-label {
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+  }
+}
+
 .select-qty {
   display: flex;
   flex-direction: row;

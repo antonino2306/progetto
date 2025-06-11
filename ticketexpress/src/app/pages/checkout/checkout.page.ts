@@ -59,7 +59,7 @@ export class CheckoutPage implements OnInit, OnDestroy {
   }
   
 
-  private paymentMethodSubscription: Subscription = new Subscription();
+  private paymentMethodSub: Subscription = new Subscription();
 
   cartSub!: Subscription;
   router = inject(Router);
@@ -108,8 +108,8 @@ export class CheckoutPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.cartService.cart.unsubscribe();
-    this.paymentMethodSubscription.unsubscribe();
+    this.cartSub.unsubscribe();
+    this.paymentMethodSub.unsubscribe();
   }
 
   getTotalAmount(): number {

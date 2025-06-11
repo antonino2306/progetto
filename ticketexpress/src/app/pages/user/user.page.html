@@ -16,7 +16,7 @@
     </ion-buttons>
   </ion-toolbar>
 
-  <ion-popover trigger="user-options-button" [dismissOnSelect]="true">
+  <ion-popover *ngIf="isMobile" trigger="user-options-button" [dismissOnSelect]="true">
     <ng-template>
       <ion-content>
         <ion-list>
@@ -190,8 +190,8 @@
               <ng-template #error>
                 <p class="errorMess">Errore nella modifica della password</p>
               </ng-template>
-              <div *ngIf="apprPass; then approved"></div>
-              <ng-template #approved>
+              <div *ngIf="apprPass; then approved1"></div>
+              <ng-template #approved1>
                 <p class="apprMess">Password modificata correttamente</p>
               </ng-template>
               <ion-button

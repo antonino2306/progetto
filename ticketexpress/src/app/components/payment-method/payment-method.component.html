@@ -51,7 +51,7 @@
           >
           <ion-card-subtitle *ngIf="payMeths.length == 1">Hai un solo metodo di pagamento</ion-card-subtitle>
           <div *ngFor="let payMeth of payMeths; let i = index">
-            <div *ngIf="i !== indexDefPM">
+            <div>
               <ion-card>
                 <ion-card-header>
                   <ion-card-subtitle

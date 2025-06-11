@@ -81,7 +81,7 @@ export class AllTicketComponent implements OnInit {
       );
     });
 
-    this.userService.getReview();
+    this.userService.getReviews();
     this.reviewSubscription = this.userService.reviews.subscribe((reviews) => {
       this.reviews = reviews;
     });

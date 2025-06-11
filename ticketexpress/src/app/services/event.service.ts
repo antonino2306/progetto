@@ -346,4 +346,25 @@ export class EventService {
         );
       });
   }
+
+   getReviewByShowID(showID: number): Promise<any> {
+    return firstValueFrom(
+      this.http.get<any>(`${this.baseUrl}/get-reviews/${showID}`, {
+        withCredentials: true,
+      })
+    )
+      .then((response: any) => {
+        if (response.success) {
+          console.log('Review got successfully!');
+          return response.reviews;
+        } else {
+          throw new Error('Error on getting review by showID');
+        }
+      })
+      .catch((error) => {
+        console.error('Error on getting review by showID:', error);
+        throw error;
+      });
+  }
+
 }

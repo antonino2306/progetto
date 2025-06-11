@@ -47,7 +47,7 @@ export class CartPage implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.cartSub.unsubscribe();
-    if (this.timerSub) this.timerSub.unsubscribe();
+    this.timerSub?.unsubscribe();
   }
 
   updateTimer() {
@@ -71,16 +71,17 @@ export class CartPage implements OnInit, OnDestroy {
 
   async decreaseQuantity(item: any) {
     try {
-      await this.cartService.remove(item.id, this.cart.length === 1 && this.cart[0].quantity === 1 ? true : false);
+      await this.cartService.remove(
+        item.id,
+        this.cart.length === 1 && this.cart[0].quantity === 1 ? true : false
+      );
     } catch (error) {
       console.error('Errore aggiornando la quantità:', error);
     }
-
   }
 
   checkout() {
     console.log('Navigating to checkout');
     this.router.navigate(['/checkout']);
   }
-
 }

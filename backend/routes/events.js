@@ -72,6 +72,28 @@ router.get("/categories", async (req, res) => {
 
 })
 
+router.get("/get-reviews/:showID", async (req, res) => {
+    const showID = req.params.showID;
+    console.log(showID);
+
+    try {
+        const reviews = await Event.getReviewsByShowID(showID);
+
+        res.status(200).json({
+            success: true,
+            reviews: reviews,
+        });
+    }
+    catch (err) {
+        console.error(err);
+        res.status(500).json({
+            success: false,
+            message: "Errore durante il recupero delle recensioni",
+        });
+    }
+}
+)
+
 router.get("/search", async (req, res) => {
     const { location, title, minPrice, maxPrice, date, category } = req.query;
     console.log(req.query)
@@ -240,5 +262,7 @@ router.get("/search-by-show/:showID", async (req, res) => {
     }
 }
 )
+
+
 
 module.exports = router;
