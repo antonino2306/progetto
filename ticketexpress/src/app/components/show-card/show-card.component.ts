@@ -38,6 +38,10 @@ import {
   ticketOutline,
   micOutline,
   peopleOutline,
+  starOutline,
+  star,
+  starHalf,
+  chatboxOutline,
 } from 'ionicons/icons';
 import { Subscription } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
@@ -67,10 +71,9 @@ import { Clipboard } from '@capacitor/clipboard';
     IonContent,
     IonChip,
     IonToast,
-    IonLabel
+    IonLabel,
   ],
 })
-
 export class ShowCardComponent {
   @Input() show: Show = {
     showID: 0,
@@ -124,14 +127,17 @@ export class ShowCardComponent {
       shareOutline,
       closeOutline,
       removeOutline,
-      addOutline, 
+      addOutline,
       locationOutline,
       calendarOutline,
       timeOutline,
       ticketOutline,
       micOutline,
       peopleOutline,
-      
+      chatboxOutline,
+      starOutline,
+      star,
+      starHalf
     });
     this.isMobile =
       this.platform.is('mobile') ||
@@ -166,11 +172,12 @@ export class ShowCardComponent {
     if (Date.now() > this.show.endDate) {
       this.isEnded = true;
       try {
-        this.reviews = await this.eventService.getReviewByShowID(this.show.showID);
+        this.reviews = await this.eventService.getReviewByShowID(
+          this.show.showID
+        );
         console.log('Reviews fetched:', this.reviews);
-      }
-      catch (error) {
-        console.error('Error fetching reviews:', error); 
+      } catch (error) {
+        console.error('Error fetching reviews:', error);
       }
     }
   }
@@ -321,4 +328,5 @@ export class ShowCardComponent {
     this.favoritesSubs.unsubscribe();
     this.destroyMap();
   }
+
 }

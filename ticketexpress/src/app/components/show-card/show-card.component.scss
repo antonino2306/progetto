@@ -422,6 +422,199 @@ ion-icon {
   }
 }
 
+.reviews-section {
+  margin-top: 20px;
+  padding: 16px;
+  background: var(--ion-color-light);
+  border-radius: 12px;
+  border: 1px solid rgba(var(--ion-color-medium-rgb), 0.2);
+
+  .reviews-title {
+    display: flex;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--ion-text-color);
+    margin: 0 0 16px 0;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(var(--ion-color-medium-rgb), 0.2);
+
+    ion-icon {
+      font-size: 1.3rem;
+      color: var(--ion-color-primary);
+      margin-right: 8px;
+    }
+  }
+
+  .empty-reviews {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+    text-align: center;
+    color: var(--ion-color-medium);
+
+    ion-icon {
+      font-size: 3rem;
+      margin-bottom: 12px;
+      opacity: 0.6;
+    }
+
+    span {
+      font-size: 1rem;
+      font-weight: 500;
+    }
+  }
+
+  .review-item {
+    margin: 0 0 16px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: all 0.3s ease;
+
+    &:hover {
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    ion-card-header {
+      padding: 16px;
+      background: rgba(var(--ion-color-primary-rgb), 0.02);
+      display: flex;
+      justify-content: space-between;
+
+      .review-meta {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 8px;
+
+        ion-card-title {
+          font-size: 1rem;
+          font-weight: 600;
+          color: var(--ion-text-color);
+          margin: 0;
+        }
+
+        .rating-stars {
+          display: flex;
+          gap: 2px;
+
+          ion-icon {
+            font-size: 1rem;
+            color: var(--ion-color-medium);
+            transition: color 0.2s ease;
+
+            &.filled {
+              color: #ffd700;
+            }
+
+            &:hover {
+              transform: scale(1.1);
+            }
+          }
+        }
+      }
+
+      ion-card-subtitle {
+        font-size: 0.85rem;
+        color: var(--ion-color-medium);
+        margin: 0;
+        font-weight: 500;
+      }
+    }
+
+    ion-card-content {
+      padding: 16px;
+      background: var(--ion-color-light);
+
+      p {
+        font-size: 0.95rem;
+        line-height: 1.5;
+        color: var(--ion-text-color);
+        margin: 0;
+      }
+    }
+  }
+
+  // Responsive design per mobile
+  @media (max-width: 768px) {
+    padding: 12px;
+    margin-top: 16px;
+
+    .reviews-title {
+      font-size: 1.1rem;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+
+      ion-icon {
+        font-size: 1.2rem;
+        margin-right: 6px;
+      }
+    }
+
+    .empty-reviews {
+      padding: 30px 15px;
+
+      ion-icon {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+      }
+
+      span {
+        font-size: 0.9rem;
+      }
+    }
+
+    .review-item {
+      margin-bottom: 12px;
+
+      ion-card-header {
+        padding: 12px;
+
+        .review-meta {
+          flex-direction: column;
+          gap: 8px;
+          align-items: flex-start;
+
+          ion-card-title {
+            font-size: 0.95rem;
+          }
+
+          .rating-stars {
+            ion-icon {
+              font-size: 0.9rem;
+            }
+          }
+        }
+
+        ion-card-subtitle {
+          font-size: 0.8rem;
+        }
+      }
+
+      ion-card-content {
+        padding: 12px;
+
+        p {
+          font-size: 0.9rem;
+          line-height: 1.4;
+        }
+      }
+    }
+  }
+}
+
+// Stili aggiuntivi per migliorare l'aspetto
+.review-item {
+  // Bordo colorato a sinistra per distinguere le recensioni
+  border-left: 3px solid transparent;
+
+  &:hover {
+    border-left-color: var(--ion-color-primary);
+  }
+}
+
 // Stili specifici per il modal mobile
 .map-container-mobile {
   display: flex;

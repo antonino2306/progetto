@@ -169,14 +169,37 @@
                 <span>Condividi evento</span>
               </ion-button>
             </div>
-            <div *ngIf="isEnded">
-              <div *ngIf="reviews.length == 0">Nessuna recensione disponibile</div>
-              <div *ngFor="let review of reviews">
-                <p>{{review.firstName}}</p>
-                <p>{{review.rate}}</p>
-                <p>{{review.description}}</p>
-                <p>{{review.date | date:"dd-mm-yyyy" }}</p>
+            <div *ngIf="isEnded" class="reviews-section">
+              <h3 class="reviews-title">
+                <ion-icon name="chatbox-outline"></ion-icon>
+                Recensioni ({{ reviews.length }})
+              </h3>
+
+              <div *ngIf="reviews.length == 0" class="empty-reviews">
+                <ion-icon name="star-outline"></ion-icon>
+                <span>Nessuna recensione disponibile</span>
               </div>
+
+              <ion-card *ngFor="let review of reviews" class="review-item">
+                <ion-card-header>
+                  <div class="review-meta">
+                    <ion-card-title>{{ review.firstName }}</ion-card-title>
+                    <div class="rating-stars">
+                      <ion-icon
+                        *ngFor="let i of [1, 2, 3, 4, 5]"
+                        [name]="i <= review.rate ? 'star' : 'star-outline'"
+                        [class.filled]="i <= review.rate"
+                      ></ion-icon>
+                    </div>
+                  </div>
+                  <ion-card-subtitle>{{
+                    review.date | date : "dd/MM/yyyy"
+                  }}</ion-card-subtitle>
+                </ion-card-header>
+                <ion-card-content>
+                  <p>{{ review.description }}</p>
+                </ion-card-content>
+              </ion-card>
             </div>
           </div>
         </div>
@@ -286,7 +309,7 @@
           </div>
 
           <!-- Action buttons -->
-          <div class="action-buttons mobile-actions">
+          <div *ngIf="!isEnded" class="action-buttons mobile-actions">
             <ion-button
               fill="clear"
               class="action-btn favorite-btn"
@@ -313,7 +336,7 @@
           </div>
 
           <!-- Sezione acquisto biglietti -->
-          <div class="ticket-purchase-section">
+          <div *ngIf="!isEnded" class="ticket-purchase-section">
             <div *ngIf="show.availableTickets; then add; else soldOut"></div>
             <ng-template #add>
               <div class="mobile-purchase-container">
@@ -359,6 +382,39 @@
                 <span>Biglietti esauriti</span>
               </div>
             </ng-template>
+          </div>
+
+          <div *ngIf="isEnded" class="reviews-section">
+            <h3 class="reviews-title">
+              <ion-icon name="chatbox-outline"></ion-icon>
+              Recensioni ({{ reviews.length }})
+            </h3>
+
+            <div *ngIf="reviews.length == 0" class="empty-reviews">
+              <ion-icon name="star-outline"></ion-icon>
+              <span>Nessuna recensione disponibile</span>
+            </div>
+
+            <ion-card *ngFor="let review of reviews" class="review-item">
+              <ion-card-header>
+                <div class="review-meta">
+                  <ion-card-title>{{ review.firstName }}</ion-card-title>
+                  <div class="rating-stars">
+                    <ion-icon
+                      *ngFor="let i of [1, 2, 3, 4, 5]"
+                      [name]="i <= review.rate ? 'star' : 'star-outline'"
+                      [class.filled]="i <= review.rate"
+                    ></ion-icon>
+                  </div>
+                </div>
+                <ion-card-subtitle>{{
+                  review.date | date : "dd/MM/yyyy"
+                }}</ion-card-subtitle>
+              </ion-card-header>
+              <ion-card-content>
+                <p>{{ review.description }}</p>
+              </ion-card-content>
+            </ion-card>
           </div>
 
           <!-- Toast -->
