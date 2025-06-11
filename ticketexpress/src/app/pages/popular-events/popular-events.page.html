@@ -2,7 +2,11 @@
 
 <ion-content [fullscreen]="true">
   <div *ngIf="!isMobile" class="view-toggle-container ion-padding">
-    <ion-button class="navigation-button" fill="clear" (click)="toggleExpandedView()">
+    <ion-button
+      class="navigation-button"
+      fill="clear"
+      (click)="toggleExpandedView()"
+    >
       <ion-icon
         slot="icon-only"
         [name]="isExpanded ? 'grid-outline' : 'list-outline'"
@@ -15,6 +19,7 @@
     <ion-row>
       <ion-col
         [sizeLg]="isExpanded ? 3 : 1"
+        [size]="isMobile ? 3 : 1"
         size-md="1"
         *ngFor="let event of events"
       >

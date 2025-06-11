@@ -186,9 +186,8 @@
                     <ion-card-title>{{ review.firstName }}</ion-card-title>
                     <div class="rating-stars">
                       <ion-icon
-                        *ngFor="let i of [1, 2, 3, 4, 5]"
-                        [name]="i <= review.rate ? 'star' : 'star-outline'"
-                        [class.filled]="i <= review.rate"
+                        *ngFor="let star of review.stars"
+                        [name]="star.icon"
                       ></ion-icon>
                     </div>
                   </div>
@@ -401,9 +400,8 @@
                   <ion-card-title>{{ review.firstName }}</ion-card-title>
                   <div class="rating-stars">
                     <ion-icon
-                      *ngFor="let i of [1, 2, 3, 4, 5]"
-                      [name]="i <= review.rate ? 'star' : 'star-outline'"
-                      [class.filled]="i <= review.rate"
+                      *ngFor="let star of review.stars"
+                      [name]="star.icon"
                     ></ion-icon>
                   </div>
                 </div>

@@ -8,6 +8,7 @@ import {
   firstValueFrom,
 } from 'rxjs';
 import { ErrorService } from './error.service'; // aggiungi questo import
+import { CartService } from './cart.service';
 
 export interface User {
   id: number;
@@ -20,9 +21,7 @@ export interface User {
   providedIn: 'root',
 })
 export class AuthService {
-  // private baseUrl = 'http://192.168.1.9:3000/auth'; // URL del backend per l'autenticazione
   private baseUrl = 'http://localhost:3000/auth'; // URL del backend per l'autenticazione
-  // private baseUrl = 'http://147.163.216.154:3000/auth'; // URL del backend per il carrello
 
   router: Router = inject(Router);
 
@@ -115,6 +114,7 @@ export class AuthService {
         if (response.success) {
           this.isLoggedIn.next(false);
           this.user.next(null);
+          CartService.resetCartTimer();
           this.router.navigate(['']);
           return response; // Restituisci il risultato alla funzione chiamante
         } else {

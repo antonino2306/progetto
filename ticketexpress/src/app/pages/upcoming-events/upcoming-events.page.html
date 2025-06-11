@@ -15,7 +15,7 @@
     <ion-row>
       <ion-col
         [sizeLg]="isExpanded ? 3 : 1"
-        size-md="1"
+        [size]="isMobile ? 3 : 1"
         *ngFor="let event of events"
       >
         <app-card

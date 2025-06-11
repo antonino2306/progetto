@@ -54,7 +54,7 @@
 </div>
     <ion-grid>
       <ion-row class="ion-justify-content-center">
-        <ion-col size="3" *ngFor="let show of shows">
+        <ion-col *ngFor="let show of shows">
           <app-show-card
             *ngIf="event"
             [show]="show"

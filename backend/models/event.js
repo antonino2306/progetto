@@ -154,7 +154,7 @@ class Event {
   static async getEventsByCategory(categoryName) {
     return new Promise((resolve, reject) => {
       db.all(
-        `SELECT E.eventID, E.title, E.description, E.coverImage, E.backgroundImage, C.name as category
+        `SELECT DISTINCT E.eventID, E.title, E.description, E.coverImage, E.backgroundImage, C.name as category
                 FROM Event E, Category C, Show S
                 WHERE E.categoryID = C.categoryID
                     AND C.name = ? AND S.startDate >= ?`,

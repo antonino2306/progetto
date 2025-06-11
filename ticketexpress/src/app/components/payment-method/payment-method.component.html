@@ -76,6 +76,7 @@
                 <ion-button
                   fill="clear"
                   class="set-pm"
+                  [disabled]="payMeth.isDefault == 1"
                   (click)="setDefaultPM(payMeth.pmID)"
                   >Imposta come predefinito</ion-button
                 >

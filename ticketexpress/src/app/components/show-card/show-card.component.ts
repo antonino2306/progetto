@@ -42,6 +42,7 @@ import {
   star,
   starHalf,
   chatboxOutline,
+  starHalfOutline,
 } from 'ionicons/icons';
 import { Subscription } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
@@ -105,6 +106,7 @@ export class ShowCardComponent {
   isToastOpen: boolean = false;
   toastMessage: string = '';
   toastColor: string = 'success';
+  starts: any[] = [];
 
   private longitude: number = 0;
   private latitude: number = 0;
@@ -137,7 +139,7 @@ export class ShowCardComponent {
       chatboxOutline,
       starOutline,
       star,
-      starHalf
+      starHalfOutline,
     });
     this.isMobile =
       this.platform.is('mobile') ||
@@ -175,11 +177,22 @@ export class ShowCardComponent {
         this.reviews = await this.eventService.getReviewByShowID(
           this.show.showID
         );
+
+        this.processReviewsStars();
         console.log('Reviews fetched:', this.reviews);
       } catch (error) {
         console.error('Error fetching reviews:', error);
       }
     }
+  }
+
+  private processReviewsStars() {
+    this.reviews = this.reviews.map((review) => ({
+      ...review,
+      stars: this.getStarsArray(review.rate), // Aggiungi le stelle calcolate
+    }));
+
+    console.log('Reviews with stars processed:', this.reviews);
   }
 
   updateQty(qty: number) {
@@ -329,4 +342,22 @@ export class ShowCardComponent {
     this.destroyMap();
   }
 
+  getStarsArray(rating: number): { icon: string }[] {
+    const stars = [];
+
+    for (let i = 1; i <= 5; i++) {
+      console.log(`Checking star ${i} for rating ${rating}`);
+      if (rating >= i) {
+        stars.push({ icon: 'star' });
+      } else if (rating >= i - 0.5) {
+        // Stella a metà
+        stars.push({ icon: 'star-half-outline' });
+      } else {
+        // Stella vuota
+        stars.push({ icon: 'star-outline' });
+      }
+    }
+
+    return stars;
+  }
 }

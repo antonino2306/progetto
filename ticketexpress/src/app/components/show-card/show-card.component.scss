@@ -9,7 +9,6 @@ ion-card-header {
   display: flex;
   flex-direction: row;
   padding: 0;
-  border-bottom: 1px solid var(--card-border);
   cursor: pointer;
 }
 
@@ -224,7 +223,8 @@ ion-icon {
 }
 
 .details-section,
-.location-details {
+.location-details,
+.reviews-section {
   padding: 1.5rem;
   background: rgba(var(--ion-color-light-rgb), 0.3);
   border-radius: 16px;
@@ -424,10 +424,6 @@ ion-icon {
 
 .reviews-section {
   margin-top: 20px;
-  padding: 16px;
-  background: var(--ion-color-light);
-  border-radius: 12px;
-  border: 1px solid rgba(var(--ion-color-medium-rgb), 0.2);
 
   .reviews-title {
     display: flex;
@@ -506,7 +502,7 @@ ion-icon {
             transition: color 0.2s ease;
 
             &.filled {
-              color: #ffd700;
+              color: var(--ion-color-primary);
             }
 
             &:hover {
@@ -526,7 +522,7 @@ ion-icon {
 
     ion-card-content {
       padding: 16px;
-      background: var(--ion-color-light);
+      // background: var(--ion-color-light);
 
       p {
         font-size: 0.95rem;
@@ -797,8 +793,6 @@ ion-modal.show-modal {
     align-items: center;
   }
 }
-
-
 
 @media screen and (max-width: 1500px) {
   .container {
